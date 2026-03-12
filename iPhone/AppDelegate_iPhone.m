@@ -146,56 +146,52 @@ BOOL isHebrew;
 	
 
 		tabBarController.viewControllers = localViewControllersArray;
-			if (@available(iOS 18.0, *)) {
-				tabBarController.mode = UITabBarControllerModeTabBar;
-			}
-			tabBarController.tabBar.barStyle = UIBarStyleBlack;
-			tabBarController.tabBar.translucent = NO;
-			tabBarController.tabBar.backgroundColor = [UIColor blackColor];
-			tabBarController.tabBar.itemPositioning = UITabBarItemPositioningFill;
-			tabBarController.tabBar.tintColor = [UIColor whiteColor];
-			if ([tabBarController.tabBar respondsToSelector:@selector(setUnselectedItemTintColor:)]) {
-				tabBarController.tabBar.unselectedItemTintColor = [UIColor whiteColor];
-			}
-			if ([tabBarController.tabBar respondsToSelector:@selector(setBarTintColor:)]) {
-				tabBarController.tabBar.barTintColor = [UIColor blackColor];
-			}
-			if (@available(iOS 13.0, *)) {
-				UITabBarAppearance *appearance = [[UITabBarAppearance alloc] init];
-				[appearance configureWithOpaqueBackground];
-				appearance.backgroundColor = [UIColor blackColor];
-				UIColor *selectedIconColor = [UIColor colorWithRed:0.0f green:0.478f blue:1.0f alpha:1.0f];
-				UIColor *unselectedIconColor = [UIColor whiteColor];
-				UIColor *normalTitleColor = [UIColor whiteColor];
-				UIColor *selectedTitleColor = [UIColor colorWithRed:0.0f green:0.478f blue:1.0f alpha:1.0f];
-				appearance.stackedLayoutAppearance.selected.iconColor = selectedIconColor;
-				appearance.stackedLayoutAppearance.selected.titleTextAttributes = [NSDictionary dictionaryWithObject:selectedTitleColor forKey:NSForegroundColorAttributeName];
-				appearance.stackedLayoutAppearance.normal.iconColor = unselectedIconColor;
-				appearance.stackedLayoutAppearance.normal.titleTextAttributes = [NSDictionary dictionaryWithObject:normalTitleColor forKey:NSForegroundColorAttributeName];
-				appearance.stackedLayoutAppearance.selected.titlePositionAdjustment = UIOffsetZero;
-				appearance.stackedLayoutAppearance.normal.titlePositionAdjustment = UIOffsetZero;
-				appearance.inlineLayoutAppearance.selected.iconColor = selectedIconColor;
-				appearance.inlineLayoutAppearance.selected.titleTextAttributes = [NSDictionary dictionaryWithObject:selectedTitleColor forKey:NSForegroundColorAttributeName];
-				appearance.inlineLayoutAppearance.normal.iconColor = unselectedIconColor;
-				appearance.inlineLayoutAppearance.normal.titleTextAttributes = [NSDictionary dictionaryWithObject:normalTitleColor forKey:NSForegroundColorAttributeName];
-				appearance.inlineLayoutAppearance.selected.titlePositionAdjustment = UIOffsetZero;
-				appearance.inlineLayoutAppearance.normal.titlePositionAdjustment = UIOffsetZero;
-				appearance.compactInlineLayoutAppearance.selected.iconColor = selectedIconColor;
-				appearance.compactInlineLayoutAppearance.selected.titleTextAttributes = [NSDictionary dictionaryWithObject:selectedTitleColor forKey:NSForegroundColorAttributeName];
-				appearance.compactInlineLayoutAppearance.normal.iconColor = unselectedIconColor;
-				appearance.compactInlineLayoutAppearance.normal.titleTextAttributes = [NSDictionary dictionaryWithObject:normalTitleColor forKey:NSForegroundColorAttributeName];
-				appearance.compactInlineLayoutAppearance.selected.titlePositionAdjustment = UIOffsetZero;
-				appearance.compactInlineLayoutAppearance.normal.titlePositionAdjustment = UIOffsetZero;
-				tabBarController.tabBar.standardAppearance = appearance;
-				if (@available(iOS 15.0, *)) {
-					tabBarController.tabBar.scrollEdgeAppearance = appearance;
-				}
-				[appearance release];
-			}
-			for (UIViewController *viewController in tabBarController.viewControllers) {
-				ConfigureTabBarItemTitleColors(viewController.tabBarItem);
-				viewController.tabBarItem.titlePositionAdjustment = UIOffsetZero;
-			}
+	
+	// Configure tab bar styling
+	tabBarController.tabBar.barStyle = UIBarStyleBlack;
+	tabBarController.tabBar.translucent = NO;
+	tabBarController.tabBar.backgroundColor = [UIColor blackColor];
+	tabBarController.tabBar.itemPositioning = UITabBarItemPositioningFill;
+	tabBarController.tabBar.tintColor = [UIColor colorWithRed:0.0f green:0.478f blue:1.0f alpha:1.0f];
+	if ([tabBarController.tabBar respondsToSelector:@selector(setUnselectedItemTintColor:)]) {
+		tabBarController.tabBar.unselectedItemTintColor = [UIColor whiteColor];
+	}
+	if ([tabBarController.tabBar respondsToSelector:@selector(setBarTintColor:)]) {
+		tabBarController.tabBar.barTintColor = [UIColor blackColor];
+	}
+	
+	// Configure appearance for iOS 13+
+	if (@available(iOS 13.0, *)) {
+		UITabBarAppearance *appearance = [[UITabBarAppearance alloc] init];
+		[appearance configureWithOpaqueBackground];
+		appearance.backgroundColor = [UIColor blackColor];
+		
+		UIColor *normalTitleColor = [UIColor whiteColor];
+		UIColor *selectedTitleColor = [UIColor colorWithRed:0.0f green:0.478f blue:1.0f alpha:1.0f];
+		
+		// Stacked layout (portrait)
+		appearance.stackedLayoutAppearance.normal.titleTextAttributes = @{NSForegroundColorAttributeName: normalTitleColor};
+		appearance.stackedLayoutAppearance.selected.titleTextAttributes = @{NSForegroundColorAttributeName: selectedTitleColor};
+		
+		// Inline layout (landscape)
+		appearance.inlineLayoutAppearance.normal.titleTextAttributes = @{NSForegroundColorAttributeName: normalTitleColor};
+		appearance.inlineLayoutAppearance.selected.titleTextAttributes = @{NSForegroundColorAttributeName: selectedTitleColor};
+		
+		// Compact inline layout (iPhone Pro)
+		appearance.compactInlineLayoutAppearance.normal.titleTextAttributes = @{NSForegroundColorAttributeName: normalTitleColor};
+		appearance.compactInlineLayoutAppearance.selected.titleTextAttributes = @{NSForegroundColorAttributeName: selectedTitleColor};
+		
+		tabBarController.tabBar.standardAppearance = appearance;
+		if (@available(iOS 15.0, *)) {
+			tabBarController.tabBar.scrollEdgeAppearance = appearance;
+		}
+		[appearance release];
+	}
+	
+	// Set per-item title attributes but DON'T adjust title position
+	for (UIViewController *viewController in tabBarController.viewControllers) {
+		ConfigureTabBarItemTitleColors(viewController.tabBarItem);
+	}
 			[localViewControllersArray release];
 //	[window addSubview:tabBarController.view];
 	[window setRootViewController:tabBarController];  // Fix for iOS6 shouldAutorotateToInterfaceOrientation deprecated method
@@ -363,6 +359,19 @@ BOOL isHebrew;
 	[alert show];
 	[alert release];
 }
+
+- (void)refreshTabBarButtonAppearance {
+	// Force refresh of tab bar appearance
+	for (UIViewController *viewController in tabBarController.viewControllers) {
+		ConfigureTabBarItemTitleColors(viewController.tabBarItem);
+	}
+}
+
+- (void)scheduleTabBarButtonAppearanceRefresh {
+	// Schedule a delayed refresh to work around iOS timing issues
+	[self performSelector:@selector(refreshTabBarButtonAppearance) withObject:nil afterDelay:0.1];
+}
+
 #pragma -
 
 #pragma mark -

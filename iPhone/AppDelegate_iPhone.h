@@ -16,11 +16,11 @@
 #import "FbGraph.h"
 
 typedef enum {
-	languageHeb,
-	languageEng
+    languageHeb,
+    languageEng
 } languageType;
 
-@interface AppDelegate_iPhone : NSObject <UIApplicationDelegate, MainTableViewControllerDelegate, SongsTableViewControllerDelegate, RecipesTableViewControllerDelegate ,FourSonsViewControllerDelegate,AboutUsViewControllerDelegate> {
+@interface AppDelegate_iPhone : NSObject <UIApplicationDelegate, UITabBarControllerDelegate, MainTableViewControllerDelegate, SongsTableViewControllerDelegate, RecipesTableViewControllerDelegate ,FourSonsViewControllerDelegate,AboutUsViewControllerDelegate> {
     UIWindow *window;
     UITabBarController *tabBarController;
     
@@ -48,6 +48,7 @@ typedef enum {
 - (void)rotateOtherViewControllers:sender toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation;
 - (void) alertWithTitle:(NSString*)title messageForAlert:(NSString *)message titleForButton:(NSString *)buttonTitle;
 - (BOOL)shouldAutorotate;
+- (void)refreshTabBarButtonAppearance;
+- (void)scheduleTabBarButtonAppearanceRefresh;
 
 @end
-
