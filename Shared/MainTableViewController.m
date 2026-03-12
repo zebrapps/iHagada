@@ -15,7 +15,7 @@
 
 @synthesize imageViewControllerHeb,imageViewControllerEng, delegate;
 @synthesize navBarChaptersHebReg,navBarChaptersHebWide,navBarChaptersEngReg,navBarChaptersEngWide;
-@synthesize langButton;
+@synthesize langButton, tableView, headerImageView;
 
 //static UIControlState btnState = UIControlStateNormal;
 
@@ -31,9 +31,48 @@ int cellWidth;
 #pragma mark -
 #pragma mark View lifecycle
 
+- (void)loadView {
+    UIView *rootView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    rootView.backgroundColor = [UIColor blackColor];
+    rootView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.view = rootView;
+    [rootView release];
+
+    UIImageView *headerView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    headerView.backgroundColor = [UIColor clearColor];
+    headerView.opaque = YES;
+    headerView.userInteractionEnabled = YES;
+    [self.view addSubview:headerView];
+    self.headerImageView = headerView;
+    [headerView release];
+
+    UITableView *chaptersTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    chaptersTableView.backgroundColor = [UIColor clearColor];
+    chaptersTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    chaptersTableView.showsVerticalScrollIndicator = NO;
+    chaptersTableView.bounces = NO;
+    chaptersTableView.contentInset = UIEdgeInsetsZero;
+    chaptersTableView.scrollIndicatorInsets = UIEdgeInsetsZero;
+    chaptersTableView.delegate = self;
+    chaptersTableView.dataSource = self;
+    if (@available(iOS 15.0, *)) {
+        chaptersTableView.sectionHeaderTopPadding = 0.0f;
+    }
+    [self.view addSubview:chaptersTableView];
+    self.tableView = chaptersTableView;
+    [chaptersTableView release];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
+        self.edgesForExtendedLayout = UIRectEdgeAll;
+        self.extendedLayoutIncludesOpaqueBars = YES;
+    }
+    self.wantsFullScreenLayout = YES;
+    self.automaticallyAdjustsScrollViewInsets = NO;
 	
 	imageViewControllerHeb = [[ImageViewControllerHeb alloc] init];
 	self.imageViewControllerHeb.delegate = self;	
@@ -75,20 +114,11 @@ int cellWidth;
         navBarChaptersEngWide = [[UIImageView alloc] initWithImage:navImage];
 	}
     
-	//	[self.navigationController.view addSubview:navImageView];
-	[self.navigationController.navigationBar addSubview:navBarChaptersHebReg];
-	[self.navigationController.navigationBar addSubview:navBarChaptersHebWide];
-	[self.navigationController.navigationBar addSubview:navBarChaptersEngReg];
-	[self.navigationController.navigationBar addSubview:navBarChaptersEngWide];
-
-	if (UIDeviceOrientationIsLandscape(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
-		langButton=[[UIButton alloc] initWithFrame:CGRectMake(443, 7, 30, 30)];	
-	} else if (UIDeviceOrientationIsPortrait(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
-		langButton=[[UIButton alloc] initWithFrame:CGRectMake(290, 7, 30, 30)];	
-	}
+	langButton=[[UIButton alloc] initWithFrame:CGRectZero];
 	[langButton setImage:[UIImage imageNamed:@"USAFlag.png"] forState:UIControlStateNormal];
 	[langButton setImage:[UIImage imageNamed:@"IsraelFlag.png"] forState:UIControlStateSelected];	
 	[langButton addTarget:self action:@selector(changeLanguage:) forControlEvents:UIControlEventTouchUpInside];		
+    [self.headerImageView addSubview:langButton];
 	
 	if (isHebrew) {
 		[langButton setSelected:NO];
@@ -96,22 +126,26 @@ int cellWidth;
 		[langButton setSelected:YES];
 	}
 
-	/* Adding the button will be in viewWill Appear */
 	[navBarChaptersHebReg setHidden:NO];
 	[navBarChaptersHebWide setHidden:YES];
 	[navBarChaptersEngReg setHidden:YES];
 	[navBarChaptersEngWide setHidden:YES];	
 
-	[self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
-
+    [self.tableView setRowHeight:66.0f];
+    if (@available(iOS 11.0, *)) {
+        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }
+    [self applyCurrentHeaderImage];
 }
 
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-	[self.navigationController.navigationBar addSubview:langButton];
-	
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [self applyCurrentHeaderImage];
+    [self updateHeaderAndTableLayout];
+		
 	/* Reload the cells to avoid the problematic sitatuation when rotating the iphone in another view controller and then going back to this view controller */
 	[self.tableView reloadData];
 	
@@ -132,17 +166,86 @@ int cellWidth;
 	//[[UIApplication sharedApplication] statusBarOrientation]
 }
 
-/*
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+
+    [self updateHeaderAndTableLayout];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-}
-*/
 
+    [self updateHeaderAndTableLayout];
+    [self.tableView reloadData];
+}
+
+
+- (CGRect)contentLayoutFrame {
+    if (self.view.superview == nil) {
+        return self.view.bounds;
+    }
+
+    CGRect contentFrame = self.view.frame;
+    contentFrame.origin.x = 0.0f;
+    contentFrame.origin.y = 0.0f;
+    contentFrame.size.width = self.view.superview.bounds.size.width;
+    contentFrame.size.height = self.view.superview.bounds.size.height;
+
+    return contentFrame;
+}
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-	
-	[langButton removeFromSuperview];
+}
+
+- (void)updateHeaderAndTableLayout {
+    CGFloat bottomInset = 0.0f;
+
+    if (@available(iOS 11.0, *)) {
+        bottomInset = self.view.safeAreaInsets.bottom;
+    }
+
+    CGRect contentFrame = [self contentLayoutFrame];
+    if (!CGRectEqualToRect(self.view.frame, contentFrame)) {
+        self.view.frame = contentFrame;
+    }
+
+    CGRect viewBounds = self.view.bounds;
+    BOOL isLandscapeLayout = viewBounds.size.width > viewBounds.size.height;
+    CGFloat contentWidth = MIN(viewBounds.size.width, isLandscapeLayout ? 480.0f : 320.0f);
+    CGFloat contentX = floor((viewBounds.size.width - contentWidth) / 2.0f);
+
+    UIImage *headerImage = self.headerImageView.image;
+    CGFloat headerHeight = 0.0f;
+    if (headerImage != nil && headerImage.size.width > 0.0f) {
+        headerHeight = floor((headerImage.size.height / headerImage.size.width) * contentWidth);
+    }
+
+    self.headerImageView.frame = CGRectMake(contentX, 0.0f, contentWidth, headerHeight);
+    CGFloat langButtonY = isLandscapeLayout ? 3.0f : 7.0f;
+    self.langButton.frame = CGRectMake(contentWidth - 37.0f, langButtonY, 30.0f, 30.0f);
+
+    CGFloat tableY = CGRectGetMaxY(self.headerImageView.frame);
+    CGFloat tableHeight = viewBounds.size.height - tableY - bottomInset;
+    self.tableView.frame = CGRectMake(contentX, tableY, contentWidth, MAX(tableHeight, 0.0f));
+}
+
+- (void)applyCurrentHeaderImage {
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+
+    if (isHebrew) {
+        if (UIInterfaceOrientationIsLandscape(orientation)) {
+            [self changeNavBarHebWide];
+        } else {
+            [self changeNavBarHebReg];
+        }
+    } else {
+        if (UIInterfaceOrientationIsLandscape(orientation)) {
+            [self changeNavBarEngWide];
+        } else {
+            [self changeNavBarEngReg];
+        }
+    }
 }
  
 
@@ -201,43 +304,47 @@ int cellWidth;
 
 
 - (void)changeNavBarHebReg {
-	
-	[langButton setFrame:CGRectMake(290, 7, 30, 30)];			
+	self.headerImageView.image = navBarChaptersHebReg.image;
 	
 	[navBarChaptersHebReg setHidden:NO];
 	[navBarChaptersHebWide setHidden:YES];
 	[navBarChaptersEngReg setHidden:YES];
 	[navBarChaptersEngWide setHidden:YES];
+
+    [self updateHeaderAndTableLayout];
 }
 
 - (void)changeNavBarHebWide {
-	
-	[langButton setFrame:CGRectMake(443, 7, 30, 30)];
+	self.headerImageView.image = navBarChaptersHebWide.image;
 	
 	[navBarChaptersHebReg setHidden:YES];
 	[navBarChaptersHebWide setHidden:NO];
 	[navBarChaptersEngReg setHidden:YES];
 	[navBarChaptersEngWide setHidden:YES];
+
+    [self updateHeaderAndTableLayout];
 }
 
 - (void)changeNavBarEngReg {
-	
-	[langButton setFrame:CGRectMake(290, 7, 30, 30)];			
+	self.headerImageView.image = navBarChaptersEngReg.image;
 	
 	[navBarChaptersHebReg setHidden:YES];
 	[navBarChaptersHebWide setHidden:YES];
 	[navBarChaptersEngReg setHidden:NO];
 	[navBarChaptersEngWide setHidden:YES];
+
+    [self updateHeaderAndTableLayout];
 }
 
 - (void)changeNavBarEngWide {
-
-	[langButton setFrame:CGRectMake(443, 7, 30, 30)];	
+	self.headerImageView.image = navBarChaptersEngWide.image;
 	
 	[navBarChaptersHebReg setHidden:YES];
 	[navBarChaptersHebWide setHidden:YES];
 	[navBarChaptersEngReg setHidden:YES];
 	[navBarChaptersEngWide setHidden:NO];
+
+    [self updateHeaderAndTableLayout];
 }
 
 #pragma mark -
@@ -506,6 +613,22 @@ int cellWidth;
 #pragma mark -
 #pragma mark Table view delegate
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 0.01f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 0.01f;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    return [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
 	/* TODO here we need to set the page number */
@@ -689,6 +812,8 @@ int cellWidth;
 	self.navBarChaptersEngReg = nil;
 	self.navBarChaptersEngWide = nil;	
 	self.langButton = nil;
+    self.tableView = nil;
+    self.headerImageView = nil;
 }
 
 
@@ -700,6 +825,8 @@ int cellWidth;
 	[self.navBarChaptersEngReg release];
 	[self.navBarChaptersEngWide release];
 	[self.langButton release];
+    [self.tableView release];
+    [self.headerImageView release];
     [super dealloc];	
 }
 

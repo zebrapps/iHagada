@@ -12,7 +12,7 @@
 
 @protocol MainTableViewControllerDelegate;
 
-@interface MainTableViewController : UITableViewController <ImageViewControllerDelegate> {
+@interface MainTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ImageViewControllerDelegate> {
 	ImageViewControllerHeb *imageViewControllerHeb;
 	ImageViewController *imageViewControllerEng;
 	
@@ -23,7 +23,9 @@
 	UIImageView *navBarChaptersEngReg;
 	UIImageView *navBarChaptersEngWide;
 	
-	UIButton *langButton;	
+	UIButton *langButton;
+    UITableView *tableView;
+    UIImageView *headerImageView;
 }
 
 @property (nonatomic, retain) ImageViewControllerHeb *imageViewControllerHeb;
@@ -36,11 +38,16 @@
 @property (nonatomic, retain) UIImageView *navBarChaptersEngWide;
 
 @property (nonatomic, retain) UIButton *langButton;
+@property (nonatomic, retain) UITableView *tableView;
+@property (nonatomic, retain) UIImageView *headerImageView;
 
 - (void)changeNavBarHebReg;
 - (void)changeNavBarHebWide;
 - (void)changeNavBarEngReg;
 - (void)changeNavBarEngWide;
+- (CGRect)contentLayoutFrame;
+- (void)updateHeaderAndTableLayout;
+- (void)applyCurrentHeaderImage;
 
 - (void)rotateOtherViewControllers:sender toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation;
 - (void)rotateViewFromAppDelegate:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration;
@@ -52,5 +59,4 @@
 - (void) changeLanguage;
 - (void)rotateOtherViewControllers:sender toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation;
 @end
-
 

@@ -11,7 +11,7 @@
 
 @implementation RecipesTableViewController
 
-@synthesize delegate, imagesNames, navBarRecipesReg, navBarRecipesWide;
+@synthesize delegate, imagesNames, navBarRecipesReg, navBarRecipesWide, tableView, headerImageView;
 
 int cellWidth;
 
@@ -20,9 +20,46 @@ int cellWidth;
 #pragma mark -
 #pragma mark View lifecycle
 
+- (void)loadView {
+    UIView *rootView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    rootView.backgroundColor = [UIColor blackColor];
+    rootView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.view = rootView;
+    [rootView release];
+
+    UIImageView *headerView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    headerView.backgroundColor = [UIColor clearColor];
+    headerView.opaque = YES;
+    [self.view addSubview:headerView];
+    self.headerImageView = headerView;
+    [headerView release];
+
+    UITableView *recipesListView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
+    recipesListView.backgroundColor = [UIColor clearColor];
+    recipesListView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    recipesListView.showsVerticalScrollIndicator = NO;
+    recipesListView.bounces = NO;
+    recipesListView.contentInset = UIEdgeInsetsZero;
+    recipesListView.scrollIndicatorInsets = UIEdgeInsetsZero;
+    recipesListView.delegate = self;
+    recipesListView.dataSource = self;
+    if (@available(iOS 15.0, *)) {
+        recipesListView.sectionHeaderTopPadding = 0.0f;
+    }
+    [self.view addSubview:recipesListView];
+    self.tableView = recipesListView;
+    [recipesListView release];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
+        self.edgesForExtendedLayout = UIRectEdgeAll;
+        self.extendedLayoutIncludesOpaqueBars = YES;
+    }
+    self.wantsFullScreenLayout = YES;
+    self.automaticallyAdjustsScrollViewInsets = NO;
 
 	imagesNames = [[NSArray alloc] initWithObjects:
                    @"BomalosSalty.jpg",
@@ -64,15 +101,15 @@ int cellWidth;
         navImage = [UIImage imageNamed:@"r1_w.jpg"];
         navBarRecipesWide = [[UIImageView alloc] initWithImage:navImage];
     }
-	
-	//	[self.navigationController.view addSubview:navImageView];
-	[self.navigationController.navigationBar addSubview:navBarRecipesReg];
-	[self.navigationController.navigationBar addSubview:navBarRecipesWide];	
-	
+
 	[navBarRecipesReg setHidden:NO];
 	[navBarRecipesWide setHidden:YES];	
-    
-	[self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
+
+    if (@available(iOS 11.0, *)) {
+        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    }
+    [self.tableView setRowHeight:66.0f];
+    [self applyCurrentHeaderImage];
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -82,6 +119,10 @@ int cellWidth;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [self applyCurrentHeaderImage];
+    [self updateHeaderAndTableLayout];
 
     if ([[UIApplication sharedApplication] statusBarOrientation] != UIInterfaceOrientationPortrait) {
         [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:NO];
@@ -97,11 +138,18 @@ int cellWidth;
 	[self.tableView reloadData];
 }
 
-/*
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+
+    [self updateHeaderAndTableLayout];
+    [self.tableView reloadData];
 }
-*/
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+
+    [self updateHeaderAndTableLayout];
+}
 /*
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
@@ -153,14 +201,72 @@ int cellWidth;
 	[self.delegate rotateOtherViewControllers:self toInterfaceOrientation:toInterfaceOrientation];
 }
 
+- (CGRect)contentLayoutFrame {
+    if (self.view.superview == nil) {
+        return self.view.bounds;
+    }
+
+    CGRect contentFrame = self.view.frame;
+    contentFrame.origin.x = 0.0f;
+    contentFrame.origin.y = 0.0f;
+    contentFrame.size.width = self.view.superview.bounds.size.width;
+    contentFrame.size.height = self.view.superview.bounds.size.height;
+
+    return contentFrame;
+}
+
+- (void)updateHeaderAndTableLayout {
+    CGFloat bottomInset = 0.0f;
+
+    if (@available(iOS 11.0, *)) {
+        bottomInset = self.view.safeAreaInsets.bottom;
+    }
+
+    CGRect contentFrame = [self contentLayoutFrame];
+    if (!CGRectEqualToRect(self.view.frame, contentFrame)) {
+        self.view.frame = contentFrame;
+    }
+
+    CGRect viewBounds = self.view.bounds;
+    BOOL isLandscapeLayout = viewBounds.size.width > viewBounds.size.height;
+    CGFloat contentWidth = MIN(viewBounds.size.width, isLandscapeLayout ? 480.0f : 320.0f);
+    CGFloat contentX = floor((viewBounds.size.width - contentWidth) / 2.0f);
+
+    UIImage *headerImage = self.headerImageView.image;
+    CGFloat headerHeight = 0.0f;
+    if (headerImage != nil && headerImage.size.width > 0.0f) {
+        headerHeight = floor((headerImage.size.height / headerImage.size.width) * contentWidth);
+    }
+
+    self.headerImageView.frame = CGRectMake(contentX, 0.0f, contentWidth, headerHeight);
+
+    CGFloat tableY = CGRectGetMaxY(self.headerImageView.frame);
+    CGFloat tableHeight = viewBounds.size.height - tableY - bottomInset;
+    self.tableView.frame = CGRectMake(contentX, tableY, contentWidth, MAX(tableHeight, 0.0f));
+}
+
+- (void)applyCurrentHeaderImage {
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+
+    if (UIInterfaceOrientationIsLandscape(orientation)) {
+        [self changeNavBarRecipesWide];
+    } else {
+        [self changeNavBarRecipesReg];
+    }
+}
+
 - (void)changeNavBarRecipesReg {
+    self.headerImageView.image = navBarRecipesReg.image;
 	[navBarRecipesReg setHidden:NO];
 	[navBarRecipesWide setHidden:YES];
+    [self updateHeaderAndTableLayout];
 }
 
 - (void)changeNavBarRecipesWide {
+    self.headerImageView.image = navBarRecipesWide.image;
 	[navBarRecipesReg setHidden:YES];
 	[navBarRecipesWide setHidden:NO];
+    [self updateHeaderAndTableLayout];
 }
 
 
@@ -433,6 +539,22 @@ int cellWidth;
 #pragma mark -
 #pragma mark Table view delegate
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 0.01f;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 0.01f;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    return [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    return [[[UIView alloc] initWithFrame:CGRectZero] autorelease];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
 	RecipeViewController *recipeViewController = [[RecipeViewController alloc] initWithNibName:@"RecipeViewController" bundle:nil];
@@ -456,12 +578,20 @@ int cellWidth;
 }
 
 - (void)viewDidUnload {
-    // Relinquish ownership of anything that can be recreated in viewDidLoad or on demand.
-    // For example: self.myOutlet = nil;
+    self.imagesNames = nil;
+    self.navBarRecipesReg = nil;
+    self.navBarRecipesWide = nil;
+    self.tableView = nil;
+    self.headerImageView = nil;
 }
 
 
 - (void)dealloc {
+    [imagesNames release];
+    [navBarRecipesReg release];
+    [navBarRecipesWide release];
+    [tableView release];
+    [headerImageView release];
     [super dealloc];
 }
 

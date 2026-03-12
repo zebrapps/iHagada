@@ -12,10 +12,10 @@
 
 @protocol SongsTableViewControllerDelegate;
 
-@interface SongsTableViewController : UITableViewController <ImageViewControllerDelegate> {
+@interface SongsTableViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ImageViewControllerDelegate> {
 	
     id <SongsTableViewControllerDelegate> delegate;
-	
+		
 	ImageViewControllerHeb *imageViewControllerHeb;
 	ImageViewController *imageViewControllerEng;
 	
@@ -25,6 +25,8 @@
 	UIImageView *navBarChaptersHebWide;
 	UIImageView *navBarChaptersEngReg;
 	UIImageView *navBarChaptersEngWide;
+    UITableView *tableView;
+    UIImageView *headerImageView;
 }
 
 @property (nonatomic, assign) id <SongsTableViewControllerDelegate> delegate;
@@ -39,11 +41,16 @@
 @property (nonatomic, retain) UIImageView *navBarChaptersHebWide;
 @property (nonatomic, retain) UIImageView *navBarChaptersEngReg;
 @property (nonatomic, retain) UIImageView *navBarChaptersEngWide;
+@property (nonatomic, retain) UITableView *tableView;
+@property (nonatomic, retain) UIImageView *headerImageView;
 
 - (void)changeNavBarHebReg;
 - (void)changeNavBarHebWide;
 - (void)changeNavBarEngReg;
 - (void)changeNavBarEngWide;
+- (CGRect)contentLayoutFrame;
+- (void)updateHeaderAndTableLayout;
+- (void)applyCurrentHeaderImage;
 
 - (void)rotateOtherViewControllers:sender toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation;
 - (void)rotateViewFromAppDelegate:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration;
@@ -53,4 +60,3 @@
 @protocol SongsTableViewControllerDelegate
 - (void)rotateOtherViewControllers:sender toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation;
 @end
-
