@@ -36,6 +36,14 @@
 int cellWidth; // Global parameter for all the other table view controllers;
 OverlayChooseImage *ovController; 
 
+- (void)setActivityIndicatorAnimating:(BOOL)animating {
+    if (animating) {
+        [self.activitiyIndicator startAnimating];
+    } else {
+        [self.activitiyIndicator stopAnimating];
+    }
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     // NSLog(@"FourSonsViewController initWithNibName");
@@ -257,10 +265,6 @@ OverlayChooseImage *ovController;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-
-    if ([[UIApplication sharedApplication] statusBarOrientation] != UIInterfaceOrientationPortrait) {
-        [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:NO];
-    }
 
 	if (UIDeviceOrientationIsPortrait(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
         [self rotatePortrait];
@@ -612,7 +616,7 @@ OverlayChooseImage *ovController;
 }
 
 -(IBAction)saveFinalPictureToLibrary {
-    [self.activitiyIndicator performSelectorInBackground:@selector(startAnimating) withObject:nil];
+    [self setActivityIndicatorAnimating:YES];
     
     [self prepareFinalPicture];
     
@@ -656,7 +660,7 @@ OverlayChooseImage *ovController;
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo{
     
-    [self.activitiyIndicator stopAnimating];
+    [self setActivityIndicatorAnimating:NO];
     
     NSString *str = @"חג שמח!";
     
@@ -706,7 +710,7 @@ OverlayChooseImage *ovController;
 
 - (IBAction)sendFinalPicture {
     
-    [self.activitiyIndicator performSelectorInBackground:@selector(startAnimating) withObject:nil];
+    [self setActivityIndicatorAnimating:YES];
     
     [self prepareFinalPicture];
     [self displayComposerSheet];

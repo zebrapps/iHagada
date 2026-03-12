@@ -50,7 +50,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-	[super viewDidAppear:animated];
+	[super viewWillAppear:animated];
     [self updateViewingModeForCurrentLayout];
 	hagadaView.dataSource = self;
 	hagadaView.delegate = self;

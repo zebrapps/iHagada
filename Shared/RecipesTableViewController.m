@@ -58,8 +58,6 @@ int cellWidth;
         self.edgesForExtendedLayout = UIRectEdgeAll;
         self.extendedLayoutIncludesOpaqueBars = YES;
     }
-    self.wantsFullScreenLayout = YES;
-    self.automaticallyAdjustsScrollViewInsets = NO;
 
 	imagesNames = [[NSArray alloc] initWithObjects:
                    @"BomalosSalty.jpg",
@@ -124,11 +122,7 @@ int cellWidth;
     [self applyCurrentHeaderImage];
     [self updateHeaderAndTableLayout];
 
-    if ([[UIApplication sharedApplication] statusBarOrientation] != UIInterfaceOrientationPortrait) {
-        [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:NO];
-    }
-
-			if (UIInterfaceOrientationIsPortrait(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
+				if (UIInterfaceOrientationIsPortrait(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
 				[self changeNavBarRecipesReg];
 			} else if (UIInterfaceOrientationIsLandscape(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
 				[self changeNavBarRecipesWide];

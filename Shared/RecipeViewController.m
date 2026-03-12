@@ -62,10 +62,6 @@ int cellWidth;
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    if ([[UIApplication sharedApplication] statusBarOrientation] != UIInterfaceOrientationPortrait) {
-        [[UIApplication sharedApplication] setStatusBarOrientation:UIInterfaceOrientationPortrait animated:NO];
-    }
-
 	if (UIInterfaceOrientationIsPortrait(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
 	#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 30200								
 		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)

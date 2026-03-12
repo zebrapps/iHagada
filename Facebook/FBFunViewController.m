@@ -46,6 +46,16 @@ int cellWidth; // Global parameter for all the other table view controllers;
 
 #pragma mark Main
 
+- (void)setActivityIndicatorsAnimating:(BOOL)animating {
+    if (animating) {
+        [self.activityIndPortrait startAnimating];
+        [self.activityIndLandscape startAnimating];
+    } else {
+        [self.activityIndPortrait stopAnimating];
+        [self.activityIndLandscape stopAnimating];
+    }
+}
+
 - (void)dealloc {
     self.loginStatusLabel = nil;
     self.loginButton = nil;
@@ -59,8 +69,7 @@ int cellWidth; // Global parameter for all the other table view controllers;
 - (void)refresh {
     if (_loginState == LoginStateStartup || _loginState == LoginStateLoggedOut) {
         // NSLog(@"startup logged out");
-        [self.activityIndPortrait performSelectorInBackground:@selector(stopAnimating) withObject:nil];        
-        [self.activityIndLandscape performSelectorInBackground:@selector(stopAnimating) withObject:nil];                
+        [self setActivityIndicatorsAnimating:NO];
         [self.uploadButtonPortrait setEnabled:YES];
         [self.uploadButtonLandscape setEnabled:YES];        
         _loginStatusLabel.text = @"Not connected to Facebook";
@@ -68,17 +77,15 @@ int cellWidth; // Global parameter for all the other table view controllers;
         _loginButton.hidden = NO;
     } else if (_loginState == LoginStateLoggingIn) {
         // NSLog(@"logging");        
-        [self.activityIndPortrait performSelectorInBackground:@selector(startAnimating) withObject:nil];        
+        [self setActivityIndicatorsAnimating:YES];
         [self.uploadButtonPortrait setEnabled:NO];        
-        [self.activityIndLandscape performSelectorInBackground:@selector(startAnimating) withObject:nil];        
         [self.uploadButtonLandscape setEnabled:NO];                
         _loginStatusLabel.text = @"Connecting to Facebook...";
         _loginButton.hidden = YES;
     } else if (_loginState == LoginStateLoggedIn) {
         // NSLog(@"logged IN");                
-        [self.activityIndPortrait performSelectorInBackground:@selector(stopAnimating) withObject:nil];
+        [self setActivityIndicatorsAnimating:NO];
         [self.uploadButtonPortrait setEnabled:YES];        
-        [self.activityIndLandscape performSelectorInBackground:@selector(stopAnimating) withObject:nil];
         [self.uploadButtonLandscape setEnabled:YES];                
         _loginStatusLabel.text = @"Connected to Facebook";
         [_loginButton setTitle:@"Logout" forState:UIControlStateNormal];
@@ -250,9 +257,8 @@ int cellWidth; // Global parameter for all the other table view controllers;
 - (IBAction)uploadPhoto {
 
     /* INDICIATOR WHILE LOADING TO FACEBOOK */
-    [self.activityIndPortrait performSelectorInBackground:@selector(startAnimating) withObject:nil];        
+    [self setActivityIndicatorsAnimating:YES];
     [self.uploadButtonPortrait setEnabled:NO];
-    [self.activityIndLandscape performSelectorInBackground:@selector(startAnimating) withObject:nil];        
     [self.uploadButtonLandscape setEnabled:NO];        
     
 
@@ -316,9 +322,8 @@ int cellWidth; // Global parameter for all the other table view controllers;
 - (void)sendToPhotosFinished:(FbGraphResponse *)fb_graph_response
 {
     
-    [self.activityIndPortrait performSelectorInBackground:@selector(stopAnimating) withObject:nil];        
+    [self setActivityIndicatorsAnimating:NO];
     [self.uploadButtonPortrait setEnabled:YES];
-    [self.activityIndLandscape performSelectorInBackground:@selector(stopAnimating) withObject:nil];        
     [self.uploadButtonLandscape setEnabled:YES];        
     
     // Use when fetching text data

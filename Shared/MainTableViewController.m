@@ -71,8 +71,6 @@ int cellWidth;
         self.edgesForExtendedLayout = UIRectEdgeAll;
         self.extendedLayoutIncludesOpaqueBars = YES;
     }
-    self.wantsFullScreenLayout = YES;
-    self.automaticallyAdjustsScrollViewInsets = NO;
 	
 	imageViewControllerHeb = [[ImageViewControllerHeb alloc] init];
 	self.imageViewControllerHeb.delegate = self;	
