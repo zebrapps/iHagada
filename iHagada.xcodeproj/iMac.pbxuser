@@ -1,0 +1,448 @@
+// !$*UTF8*$!
+{
+	1D6058900D05DD3D006BFB54 /* iHagada */ = {
+		activeExec = 0;
+		executables = (
+			88D14AA2131D967F001FD5A5 /* iHagada */,
+		);
+	};
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 88D14AA2131D967F001FD5A5 /* iHagada */;
+		activeSDKPreference = iphonesimulator3.0;
+		activeTarget = 1D6058900D05DD3D006BFB54 /* iHagada */;
+		addToTargets = (
+			1D6058900D05DD3D006BFB54 /* iHagada */,
+		);
+		codeSenseManager = 88D14AB5131D96A0001FD5A5 /* Code sense */;
+		executables = (
+			88D14AA2131D967F001FD5A5 /* iHagada */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					1405,
+					20,
+					48,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFindDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFindDataSource_LocationID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					200,
+					1419,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFindDataSource_MessageID,
+					PBXFindDataSource_LocationID,
+				);
+			};
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					1365,
+					60,
+					20,
+					48.16259765625,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 324825493;
+			PBXWorkspaceStateSaveDate = 324825493;
+		};
+		perUserProjectItems = {
+			88098667133D282700EC96E3 = 88098667133D282700EC96E3 /* PBXTextBookmark */;
+			88098668133D282700EC96E3 = 88098668133D282700EC96E3 /* PBXTextBookmark */;
+			886068AD134BA1A000D4A2F2 = 886068AD134BA1A000D4A2F2 /* PBXBookmark */;
+			886068AE134BA1A000D4A2F2 = 886068AE134BA1A000D4A2F2 /* PBXTextBookmark */;
+			886068AF134BA1A000D4A2F2 = 886068AF134BA1A000D4A2F2 /* PlistBookmark */;
+			886068B4134BA1A000D4A2F2 = 886068B4134BA1A000D4A2F2 /* PlistBookmark */;
+			8889E0C21333A796006038D2 = 8889E0C21333A796006038D2 /* PBXTextBookmark */;
+			8889EEC8134B849200EBAE2F = 8889EEC8134B849200EBAE2F /* PlistBookmark */;
+			88CEDCFF135C719700BFD323 /* PlistBookmark */ = 88CEDCFF135C719700BFD323 /* PlistBookmark */;
+			88D14BA9131DACD5001FD5A5 = 88D14BA9131DACD5001FD5A5 /* PBXBookmark */;
+			88D1E824132B246A00810B78 = 88D1E824132B246A00810B78 /* PBXTextBookmark */;
+			88D1E825132B246A00810B78 = 88D1E825132B246A00810B78 /* PBXTextBookmark */;
+			88D1E826132B246A00810B78 = 88D1E826132B246A00810B78 /* PBXTextBookmark */;
+			88D1E827132B246A00810B78 = 88D1E827132B246A00810B78 /* PBXTextBookmark */;
+			88D1E829132B246A00810B78 = 88D1E829132B246A00810B78 /* PBXTextBookmark */;
+			88D1E82C132B246A00810B78 = 88D1E82C132B246A00810B78 /* PBXTextBookmark */;
+			88D1E82D132B246A00810B78 = 88D1E82D132B246A00810B78 /* PBXTextBookmark */;
+			88D1E82E132B246A00810B78 = 88D1E82E132B246A00810B78 /* PBXTextBookmark */;
+			88D1E83A132B246A00810B78 = 88D1E83A132B246A00810B78 /* PBXTextBookmark */;
+			88D1E83B132B246A00810B78 = 88D1E83B132B246A00810B78 /* PBXTextBookmark */;
+			88D1E83C132B246A00810B78 = 88D1E83C132B246A00810B78 /* PBXTextBookmark */;
+			88D3D44D132C26980000A1A0 = 88D3D44D132C26980000A1A0 /* PBXTextBookmark */;
+			88DD8C801352386500888C66 = 88DD8C801352386500888C66 /* PlistBookmark */;
+		};
+		sourceControlManager = 88D14AB4131D96A0001FD5A5 /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	32CA4F630368D1EE00C91783 /* iHagada_Prefix.pch */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1583, 636}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 183}";
+		};
+	};
+	88098667133D282700EC96E3 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 88D14AF0131D9AD5001FD5A5 /* ImageViewController.m */;
+		name = "ImageViewController.m: 47";
+		rLen = 0;
+		rLoc = 2650;
+		rType = 0;
+		vrLen = 3686;
+		vrLoc = 215;
+	};
+	88098668133D282700EC96E3 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 88C9A8E913355FC700EE71ED /* AppDelegate_iPhone.m */;
+		name = "AppDelegate_iPhone.m: 75";
+		rLen = 7;
+		rLoc = 2546;
+		rType = 0;
+		vrLen = 2054;
+		vrLoc = 1473;
+	};
+	886068AD134BA1A000D4A2F2 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 8889EECB134B849D00EBAE2F /* simhaRaba_ipad.jpg */;
+	};
+	886068AE134BA1A000D4A2F2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 32CA4F630368D1EE00C91783 /* iHagada_Prefix.pch */;
+		name = "iHagada_Prefix.pch: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 183;
+		vrLoc = 0;
+	};
+	886068AF134BA1A000D4A2F2 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 88A0EF57134BA0FA007087AC /* iHagada-Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Developer/My Projects/iHagada 2011/iHagada/iHagada-Info.plist";
+		rLen = 0;
+		rLoc = 9223372036854775808;
+	};
+	886068B4134BA1A000D4A2F2 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 88A0EF57134BA0FA007087AC /* iHagada-Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Developer/My Projects/iHagada 2011/iHagada/iHagada-Info.plist";
+		rLen = 0;
+		rLoc = 9223372036854775808;
+	};
+	8889E0C21333A796006038D2 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 88D14B3C131D9BA2001FD5A5 /* HagadaViewController.h */;
+		name = "HagadaViewController.h: 13";
+		rLen = 0;
+		rLoc = 320;
+		rType = 0;
+		vrLen = 339;
+		vrLoc = 0;
+	};
+	8889EEC8134B849200EBAE2F /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+			CFBundleIdentifier,
+		);
+		name = "/Developer/My Projects/iHagada 2011/iHagada/iHagada-Info.plist";
+		rLen = 0;
+		rLoc = 9223372036854775808;
+	};
+	88C9A8E913355FC700EE71ED /* AppDelegate_iPhone.m */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.objc;
+		name = AppDelegate_iPhone.m;
+		path = "/Developer/My Projects/iHagada 2011/iHagada/iPhone/AppDelegate_iPhone.m";
+		sourceTree = "<absolute>";
+	};
+	88CEDCFF135C719700BFD323 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 88A0EF57134BA0FA007087AC /* iHagada-Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Developer/My Projects/iHagada 2011/iHagada/iHagada-Info.plist";
+		rLen = 0;
+		rLoc = 9223372036854775807;
+	};
+	88D14AA2131D967F001FD5A5 /* iHagada */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = iHagada;
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	88D14AB4131D96A0001FD5A5 /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	88D14AB5131D96A0001FD5A5 /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	88D14AF0131D9AD5001FD5A5 /* ImageViewController.m */ = {
+		isa = PBXFileReference;
+		fileEncoding = 4;
+		lastKnownFileType = sourcecode.c.objc;
+		name = ImageViewController.m;
+		path = "/Developer/My Projects/iHagada 2011/iHagada/Shared/ImageViewController.m";
+		sourceTree = "<absolute>";
+	};
+	88D14B30131D9BA2001FD5A5 /* HagadaCache.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = HagadaCache.h;
+		path = "/Developer/My Projects/Hometheater Project/iHagada/Shared/HagadaCache.h";
+		sourceTree = "<absolute>";
+	};
+	88D14B32131D9BA2001FD5A5 /* HagadaCache.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = HagadaCache.m;
+		path = "/Developer/My Projects/Hometheater Project/iHagada/Shared/HagadaCache.m";
+		sourceTree = "<absolute>";
+	};
+	88D14B38131D9BA2001FD5A5 /* HagadaView.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = HagadaView.h;
+		path = "/Developer/My Projects/Hometheater Project/iHagada/Shared/HagadaView.h";
+		sourceTree = "<absolute>";
+	};
+	88D14B3A131D9BA2001FD5A5 /* HagadaView.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = HagadaView.m;
+		path = "/Developer/My Projects/Hometheater Project/iHagada/Shared/HagadaView.m";
+		sourceTree = "<absolute>";
+	};
+	88D14B3C131D9BA2001FD5A5 /* HagadaViewController.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = HagadaViewController.h;
+		path = "/Developer/My Projects/Hometheater Project/iHagada/Shared/HagadaViewController.h";
+		sourceTree = "<absolute>";
+	};
+	88D14B3E131D9BA2001FD5A5 /* HagadaViewController.m */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.objc;
+		name = HagadaViewController.m;
+		path = "/Developer/My Projects/Hometheater Project/iHagada/Shared/HagadaViewController.m";
+		sourceTree = "<absolute>";
+	};
+	88D14B40131D9BA2001FD5A5 /* ImageViewController.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = ImageViewController.h;
+		path = "/Developer/My Projects/Hometheater Project/iHagada/Shared/ImageViewController.h";
+		sourceTree = "<absolute>";
+	};
+	88D14B47131D9BA2001FD5A5 /* Utilities.h */ = {
+		isa = PBXFileReference;
+		lastKnownFileType = sourcecode.c.h;
+		name = Utilities.h;
+		path = "/Developer/My Projects/Hometheater Project/iHagada/Other Sources/Utilities.h";
+		sourceTree = "<absolute>";
+	};
+	88D14BA9131DACD5001FD5A5 /* PBXBookmark */ = {
+		isa = PBXBookmark;
+	};
+	88D1E824132B246A00810B78 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 88D14B32131D9BA2001FD5A5 /* HagadaCache.m */;
+		name = "HagadaCache.m: 87";
+		rLen = 6;
+		rLoc = 2393;
+		rType = 0;
+		vrLen = 1662;
+		vrLoc = 1162;
+	};
+	88D1E825132B246A00810B78 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 88D14B30131D9BA2001FD5A5 /* HagadaCache.h */;
+		name = "HagadaCache.h: 11";
+		rLen = 0;
+		rLoc = 209;
+		rType = 0;
+		vrLen = 736;
+		vrLoc = 0;
+	};
+	88D1E826132B246A00810B78 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		name = "AppDelegate_iPhone.m: 32";
+		rLen = 0;
+		rLoc = 908;
+		rType = 0;
+		vrLen = 2352;
+		vrLoc = 0;
+	};
+	88D1E827132B246A00810B78 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		name = "AppDelegate_iPhone.h: 13";
+		rLen = 0;
+		rLoc = 292;
+		rType = 0;
+		vrLen = 360;
+		vrLoc = 0;
+	};
+	88D1E829132B246A00810B78 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		name = "AppDelegate_iPad.h: 13";
+		rLen = 0;
+		rLoc = 252;
+		rType = 0;
+		vrLen = 353;
+		vrLoc = 0;
+	};
+	88D1E82C132B246A00810B78 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 88D14B47131D9BA2001FD5A5 /* Utilities.h */;
+		name = "Utilities.h: 3";
+		rLen = 6;
+		rLoc = 23;
+		rType = 0;
+		vrLen = 254;
+		vrLoc = 0;
+	};
+	88D1E82D132B246A00810B78 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		name = "Utilities.m: 18";
+		rLen = 0;
+		rLoc = 790;
+		rType = 0;
+		vrLen = 790;
+		vrLoc = 0;
+	};
+	88D1E82E132B246A00810B78 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		name = "main.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 356;
+		vrLoc = 0;
+	};
+	88D1E83A132B246A00810B78 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 88D14B38131D9BA2001FD5A5 /* HagadaView.h */;
+		name = "HagadaView.h: 80";
+		rLen = 13;
+		rLoc = 1819;
+		rType = 0;
+		vrLen = 805;
+		vrLoc = 1384;
+	};
+	88D1E83B132B246A00810B78 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 88D14B3E131D9BA2001FD5A5 /* HagadaViewController.m */;
+		name = "HagadaViewController.m: 29";
+		rLen = 13;
+		rLoc = 646;
+		rType = 0;
+		vrLen = 787;
+		vrLoc = 0;
+	};
+	88D1E83C132B246A00810B78 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 88D14B3A131D9BA2001FD5A5 /* HagadaView.m */;
+		name = "HagadaView.m: 176";
+		rLen = 0;
+		rLoc = 4966;
+		rType = 0;
+		vrLen = 1085;
+		vrLoc = 433;
+	};
+	88D3D44D132C26980000A1A0 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 88D14B40131D9BA2001FD5A5 /* ImageViewController.h */;
+		name = "ImageViewController.h: 12";
+		rLen = 6;
+		rLoc = 229;
+		rType = 0;
+		vrLen = 278;
+		vrLoc = 0;
+	};
+	88DD8C801352386500888C66 /* PlistBookmark */ = {
+		isa = PlistBookmark;
+		fRef = 88A0EF57134BA0FA007087AC /* iHagada-Info.plist */;
+		fallbackIsa = PBXBookmark;
+		isK = 0;
+		kPath = (
+		);
+		name = "/Developer/My Projects/iHagada 2011/iHagada/iHagada-Info.plist";
+		rLen = 0;
+		rLoc = 9223372036854775808;
+	};
+}
