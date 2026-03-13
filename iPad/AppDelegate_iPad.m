@@ -13,6 +13,41 @@
 #import "AboutUsViewController.h"
 #import "SongsIpadViewController.h"
 #import "RecipesIpadViewController.h"
+
+static UIImage *TintedTabBarImageNamed(NSString *imageName, UIColor *tintColor) {
+    UIImage *sourceImage = [UIImage imageNamed:imageName];
+    if (sourceImage == nil) {
+        return nil;
+    }
+
+    UIGraphicsBeginImageContextWithOptions(sourceImage.size, NO, sourceImage.scale);
+    CGRect imageRect = CGRectMake(0.0f, 0.0f, sourceImage.size.width, sourceImage.size.height);
+    [tintColor setFill];
+    UIRectFill(imageRect);
+    [sourceImage drawInRect:imageRect blendMode:kCGBlendModeDestinationIn alpha:1.0f];
+    UIImage *tintedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+
+    return [tintedImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+}
+
+static UIImage *WhiteTabBarImageNamed(NSString *imageName) {
+    return TintedTabBarImageNamed(imageName, [UIColor whiteColor]);
+}
+
+static UIImage *BlueTabBarImageNamed(NSString *imageName) {
+    return TintedTabBarImageNamed(imageName, [UIColor colorWithRed:0.0f green:0.478f blue:1.0f alpha:1.0f]);
+}
+
+static void ConfigureTabBarItemTitleColors(UITabBarItem *tabBarItem) {
+    NSDictionary *normalTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor]
+                                                                     forKey:NSForegroundColorAttributeName];
+    NSDictionary *selectedTextAttributes = [NSDictionary dictionaryWithObject:[UIColor whiteColor]
+                                                                       forKey:NSForegroundColorAttributeName];
+    [tabBarItem setTitleTextAttributes:normalTextAttributes forState:UIControlStateNormal];
+    [tabBarItem setTitleTextAttributes:selectedTextAttributes forState:UIControlStateSelected];
+}
+
 @implementation AppDelegate_iPad
 
 @synthesize window, tabBarController;
@@ -53,22 +88,26 @@
 	HagadaChaptersViewController *hagadaChaptersViewController;
 	hagadaChaptersViewController = [[HagadaChaptersViewController alloc] initWithNibName:@"HagadaChaptersViewController" bundle:nil];
 	hagadaChaptersViewController.delegate = self;
-	RootViewController *rootViewController = [[RootViewController alloc] initWithRootViewController:hagadaChaptersViewController];	
-	
-	rootViewController.tabBarItem.title = @"פרקי ההגדה";
-    rootViewController.tabBarItem.image = [UIImage imageNamed:@"bookmarks.png"];	
-	
-	[localViewControllersArray addObject:rootViewController];	
+		RootViewController *rootViewController = [[RootViewController alloc] initWithRootViewController:hagadaChaptersViewController];	
+		
+		rootViewController.tabBarItem.title = @"פרקי ההגדה";
+    rootViewController.tabBarItem.image = WhiteTabBarImageNamed(@"bookmarks.png");
+    rootViewController.tabBarItem.selectedImage = BlueTabBarImageNamed(@"bookmarks.png");
+    ConfigureTabBarItemTitleColors(rootViewController.tabBarItem);
+		
+		[localViewControllersArray addObject:rootViewController];	
 	
 	SongsIpadViewController *songsIpadViewController;
 	songsIpadViewController = [[SongsIpadViewController alloc] initWithNibName:@"SongsIpadViewController" bundle:nil];
 	songsIpadViewController.delegate = self;	
-	RootViewController *songsRootViewController = [[RootViewController alloc] initWithRootViewController:songsIpadViewController];	
-	
-	songsRootViewController.tabBarItem.title = @"שירים";
-	songsRootViewController.tabBarItem.image = [UIImage imageNamed:@"note_icon.png"];
-	
-	[localViewControllersArray addObject:songsRootViewController];
+		RootViewController *songsRootViewController = [[RootViewController alloc] initWithRootViewController:songsIpadViewController];	
+		
+		songsRootViewController.tabBarItem.title = @"שירים";
+		songsRootViewController.tabBarItem.image = WhiteTabBarImageNamed(@"note_icon.png");
+        songsRootViewController.tabBarItem.selectedImage = BlueTabBarImageNamed(@"note_icon.png");
+        ConfigureTabBarItemTitleColors(songsRootViewController.tabBarItem);
+		
+		[localViewControllersArray addObject:songsRootViewController];
 	
 	/*
 	RecipesTableViewController *recipesTableViewController;
@@ -77,12 +116,14 @@
 	RecipesIpadViewController *recipesIpadViewController;
 	recipesIpadViewController = [[RecipesIpadViewController alloc] initWithNibName:@"RecipesIpadViewController" bundle:nil];
 	recipesIpadViewController.delegate = self;
-	RootViewController *recipesRootViewController = [[RootViewController alloc] initWithRootViewController:recipesIpadViewController];	
-	
-	recipesRootViewController.tabBarItem.title = @"מתכונים לחג";
-    recipesRootViewController.tabBarItem.image = [UIImage imageNamed:@"recipes_icon.png"];	
-	
-	[localViewControllersArray addObject:recipesRootViewController];
+		RootViewController *recipesRootViewController = [[RootViewController alloc] initWithRootViewController:recipesIpadViewController];	
+		
+		recipesRootViewController.tabBarItem.title = @"מתכונים לחג";
+    recipesRootViewController.tabBarItem.image = WhiteTabBarImageNamed(@"recipes_icon.png");
+    recipesRootViewController.tabBarItem.selectedImage = BlueTabBarImageNamed(@"recipes_icon.png");
+    ConfigureTabBarItemTitleColors(recipesRootViewController.tabBarItem);
+		
+		[localViewControllersArray addObject:recipesRootViewController];
 	
 	FourSonsViewController *fourSonsViewController = [[FourSonsViewController alloc] initWithNibName:@"FourSonsViewControllerHD" bundle:nil];
     
@@ -90,10 +131,12 @@
     
     RootViewController *fourSonsRootViewController = [[RootViewController alloc] initWithRootViewController:fourSonsViewController];	
     
-	fourSonsRootViewController.tabBarItem.title = @"ארבעה בנים";
-    fourSonsRootViewController.tabBarItem.image = [UIImage imageNamed:@"mask_icon.png"];
+		fourSonsRootViewController.tabBarItem.title = @"ארבעה בנים";
+    fourSonsRootViewController.tabBarItem.image = WhiteTabBarImageNamed(@"mask_icon.png");
+    fourSonsRootViewController.tabBarItem.selectedImage = BlueTabBarImageNamed(@"mask_icon.png");
+    ConfigureTabBarItemTitleColors(fourSonsRootViewController.tabBarItem);
     
-	[localViewControllersArray addObject:fourSonsRootViewController];
+		[localViewControllersArray addObject:fourSonsRootViewController];
     
 	AboutUsViewController *aboutUsViewController;
 	
@@ -106,36 +149,69 @@
 	
 	RootViewController *aboutRootViewController = [[RootViewController alloc] initWithRootViewController:aboutUsViewController];
 	
-	aboutUsViewController.delegate = self;
-	
-	aboutRootViewController.tabBarItem.title = @"אודות";
-    aboutRootViewController.tabBarItem.image = [UIImage imageNamed:@"about_icon.png"];
+		aboutUsViewController.delegate = self;
+		
+		aboutRootViewController.tabBarItem.title = @"אודות";
+    aboutRootViewController.tabBarItem.image = WhiteTabBarImageNamed(@"about_icon.png");
+    aboutRootViewController.tabBarItem.selectedImage = BlueTabBarImageNamed(@"about_icon.png");
+    ConfigureTabBarItemTitleColors(aboutRootViewController.tabBarItem);
 
 	
 	[localViewControllersArray addObject:aboutRootViewController];
 	
 	
-		tabBarController.viewControllers = localViewControllersArray;
-		if (@available(iOS 18.0, *)) {
-			tabBarController.mode = UITabBarControllerModeTabBar;
-			tabBarController.traitOverrides.horizontalSizeClass = UIUserInterfaceSizeClassCompact;
-		}
-		tabBarController.tabBar.barStyle = UIBarStyleBlack;
-		tabBarController.tabBar.translucent = NO;
-		tabBarController.tabBar.backgroundColor = [UIColor blackColor];
-		if ([tabBarController.tabBar respondsToSelector:@selector(setBarTintColor:)]) {
-			tabBarController.tabBar.barTintColor = [UIColor blackColor];
-		}
-		if (@available(iOS 13.0, *)) {
-			UITabBarAppearance *appearance = [[UITabBarAppearance alloc] init];
-			[appearance configureWithOpaqueBackground];
-			appearance.backgroundColor = [UIColor blackColor];
-			tabBarController.tabBar.standardAppearance = appearance;
-			if (@available(iOS 15.0, *)) {
-				tabBarController.tabBar.scrollEdgeAppearance = appearance;
+			tabBarController.viewControllers = localViewControllersArray;
+			if (@available(iOS 18.0, *)) {
+				tabBarController.mode = UITabBarControllerModeTabBar;
+				tabBarController.traitOverrides.horizontalSizeClass = UIUserInterfaceSizeClassCompact;
 			}
-			[appearance release];
-		}
+			tabBarController.tabBar.barStyle = UIBarStyleBlack;
+			tabBarController.tabBar.translucent = NO;
+			tabBarController.tabBar.backgroundColor = [UIColor blackColor];
+            tabBarController.tabBar.itemPositioning = UITabBarItemPositioningFill;
+            tabBarController.tabBar.tintColor = [UIColor colorWithRed:0.0f green:0.478f blue:1.0f alpha:1.0f];
+            if ([tabBarController.tabBar respondsToSelector:@selector(setUnselectedItemTintColor:)]) {
+                tabBarController.tabBar.unselectedItemTintColor = [UIColor whiteColor];
+            }
+			if ([tabBarController.tabBar respondsToSelector:@selector(setBarTintColor:)]) {
+				tabBarController.tabBar.barTintColor = [UIColor blackColor];
+			}
+			if (@available(iOS 13.0, *)) {
+				UITabBarAppearance *appearance = [[UITabBarAppearance alloc] init];
+				[appearance configureWithOpaqueBackground];
+				appearance.backgroundColor = [UIColor blackColor];
+                UIColor *normalTitleColor = [UIColor whiteColor];
+                UIColor *selectedTitleColor = [UIColor whiteColor];
+                UIColor *normalIconColor = [UIColor whiteColor];
+                UIColor *selectedIconColor = [UIColor whiteColor];
+                appearance.stackedLayoutAppearance.normal.titleTextAttributes = @{NSForegroundColorAttributeName: normalTitleColor};
+                appearance.stackedLayoutAppearance.selected.titleTextAttributes = @{NSForegroundColorAttributeName: selectedTitleColor};
+                appearance.stackedLayoutAppearance.normal.iconColor = normalIconColor;
+                appearance.stackedLayoutAppearance.selected.iconColor = selectedIconColor;
+                appearance.stackedLayoutAppearance.normal.titlePositionAdjustment = UIOffsetZero;
+                appearance.stackedLayoutAppearance.selected.titlePositionAdjustment = UIOffsetZero;
+                appearance.inlineLayoutAppearance.normal.titleTextAttributes = @{NSForegroundColorAttributeName: normalTitleColor};
+                appearance.inlineLayoutAppearance.selected.titleTextAttributes = @{NSForegroundColorAttributeName: selectedTitleColor};
+                appearance.inlineLayoutAppearance.normal.iconColor = normalIconColor;
+                appearance.inlineLayoutAppearance.selected.iconColor = selectedIconColor;
+                appearance.inlineLayoutAppearance.normal.titlePositionAdjustment = UIOffsetZero;
+                appearance.inlineLayoutAppearance.selected.titlePositionAdjustment = UIOffsetZero;
+                appearance.compactInlineLayoutAppearance.normal.titleTextAttributes = @{NSForegroundColorAttributeName: normalTitleColor};
+                appearance.compactInlineLayoutAppearance.selected.titleTextAttributes = @{NSForegroundColorAttributeName: selectedTitleColor};
+                appearance.compactInlineLayoutAppearance.normal.iconColor = normalIconColor;
+                appearance.compactInlineLayoutAppearance.selected.iconColor = selectedIconColor;
+                appearance.compactInlineLayoutAppearance.normal.titlePositionAdjustment = UIOffsetZero;
+                appearance.compactInlineLayoutAppearance.selected.titlePositionAdjustment = UIOffsetZero;
+				tabBarController.tabBar.standardAppearance = appearance;
+				if (@available(iOS 15.0, *)) {
+					tabBarController.tabBar.scrollEdgeAppearance = appearance;
+				}
+				[appearance release];
+			}
+
+            for (UIViewController *viewController in tabBarController.viewControllers) {
+                ConfigureTabBarItemTitleColors(viewController.tabBarItem);
+            }
 		
 		[localViewControllersArray release];
 	
