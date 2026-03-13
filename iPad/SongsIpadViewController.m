@@ -13,7 +13,6 @@
 
 @synthesize songsImageViewHeb, songsImageViewEng, delegate, imageViewControllerEng, imageViewControllerHeb;
 
-BOOL isHebrew;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

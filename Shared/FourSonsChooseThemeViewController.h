@@ -45,7 +45,6 @@
 - (void)changeOtherScrollViewAfterPaging;
 - (IBAction)cancelChooseTheme ;
 -(IBAction)clickPageControl:(id)sender;
-- (void)changeOtherScrollViewAfterPaging;
 - (void) removeTemplateOverlayView;
 
 @end

@@ -142,7 +142,7 @@
     
     // Save OriginalImage In case of resizing it or using it in another theme
     int photoNumberChosen = [self.delegate photoNumber];
-    NSString *imageName;
+    NSString *imageName = nil;
     
     switch (photoNumberChosen) {
         case 1: {
@@ -165,7 +165,7 @@
             break;
         }
         default:
-            break;
+            return;
     }
     
     NSData* imageData = UIImagePNGRepresentation(smallImage);
@@ -205,8 +205,8 @@
 - (IBAction)confirmPicture {
         
     int photoNumberChosen = [self.delegate photoNumber];
-    NSString *imageName;
-    NSString *imageTransformKey;
+    NSString *imageName = nil;
+    NSString *imageTransformKey = nil;
     
     switch (photoNumberChosen) {
         case 1: {
@@ -234,7 +234,7 @@
             break;
         }
         default:
-            break;
+            return;
     }
     
         
@@ -424,7 +424,7 @@
                                                     8, /* bits per channel */
                                                     (targetWidth * 4), /* 4 channels per pixel * numPixels/row */
                                                     CGColorSpaceCreateDeviceRGB(),
-                                                    kCGImageAlphaPremultipliedLast
+                                                    (CGBitmapInfo)kCGImageAlphaPremultipliedLast
                                                     );        
         
     } else {
@@ -437,7 +437,7 @@
                                        8, /* bits per channel */
                                        (targetHeight * 4), /* 4 channels per pixel * numPixels/row */
                                        CGColorSpaceCreateDeviceRGB(),
-                                       kCGImageAlphaPremultipliedLast
+                                       (CGBitmapInfo)kCGImageAlphaPremultipliedLast
                                        );        
         
     }   
@@ -494,7 +494,7 @@
                                    8, /* bits per channel */
                                    (targetWidth * 4), /* 4 channels per pixel * numPixels/row */
                                    CGColorSpaceCreateDeviceRGB(),
-                                   kCGImageAlphaPremultipliedLast
+                                   (CGBitmapInfo)kCGImageAlphaPremultipliedLast
                                    ); 
     
     
@@ -744,4 +744,3 @@
 
 @end
 #pragma clang diagnostic pop
-

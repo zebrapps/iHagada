@@ -14,8 +14,6 @@
 @synthesize /*imagesNames,*/ navBarChaptersHebReg,navBarChaptersHebWide,navBarChaptersEngReg,navBarChaptersEngWide;
 @synthesize delegate, imageViewControllerEng, imageViewControllerHeb, tableView, headerImageView;
 
-BOOL isHebrew;
-int	cellWidth;
 
 #define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
 

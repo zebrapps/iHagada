@@ -55,6 +55,7 @@ static void ConfigureTabBarItemTitleColors(UITabBarItem *tabBarItem) {
 //static languageType chosenLanguageType;
 
 BOOL isHebrew;
+int cellWidth;
 
 #pragma mark -
 #pragma mark Application lifecycle

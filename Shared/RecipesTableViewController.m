@@ -13,7 +13,6 @@
 
 @synthesize delegate, imagesNames, navBarRecipesReg, navBarRecipesWide, tableView, headerImageView;
 
-int cellWidth;
 
 #define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
 

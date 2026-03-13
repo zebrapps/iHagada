@@ -16,7 +16,6 @@
 @synthesize imageViewHeb, imageViewEng;
 @synthesize BHebrew;
 
-BOOL isHebrew;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

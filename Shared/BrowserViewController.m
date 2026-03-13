@@ -13,13 +13,57 @@
 //@synthesize backButton;
 @synthesize delegate;
 
-int cellWidth;
+static NSArray *IHBrowserToolbarItems(id target) {
+    UIBarButtonItem *backItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRewind
+                                                                               target:target
+                                                                               action:@selector(goBack:)] autorelease];
+    UIBarButtonItem *refreshItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+                                                                                  target:target
+                                                                                  action:@selector(refresh:)] autorelease];
+    UIBarButtonItem *stopItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
+                                                                               target:target
+                                                                               action:@selector(stopLoading:)] autorelease];
+    UIBarButtonItem *forwardItem = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward
+                                                                                  target:target
+                                                                                  action:@selector(goForward:)] autorelease];
+    UIBarButtonItem *flex1 = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                            target:nil
+                                                                            action:nil] autorelease];
+    UIBarButtonItem *flex2 = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                            target:nil
+                                                                            action:nil] autorelease];
+    UIBarButtonItem *flex3 = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                                                                            target:nil
+                                                                            action:nil] autorelease];
+
+    return [NSArray arrayWithObjects:backItem, flex1, refreshItem, flex2, stopItem, flex3, forwardItem, nil];
+}
+
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
 	self.navigationItem.hidesBackButton = YES;
+    UIToolbar *legacyToolbar = nil;
+    for (UIView *subview in self.view.subviews) {
+        if ([subview isKindOfClass:[UIToolbar class]]) {
+            legacyToolbar = (UIToolbar *)subview;
+            break;
+        }
+    }
+
+    if (legacyToolbar) {
+        UIToolbar *toolbar = [[[UIToolbar alloc] initWithFrame:legacyToolbar.frame] autorelease];
+        toolbar.autoresizingMask = legacyToolbar.autoresizingMask;
+        toolbar.barStyle = legacyToolbar.barStyle;
+        toolbar.tintColor = legacyToolbar.tintColor;
+        toolbar.translucent = legacyToolbar.translucent;
+        [toolbar setItems:IHBrowserToolbarItems(self)];
+        [self.view insertSubview:toolbar aboveSubview:legacyToolbar];
+        [legacyToolbar removeFromSuperview];
+    }
+
     if (!self.webView) {
         WKWebViewConfiguration *configuration = [[[WKWebViewConfiguration alloc] init] autorelease];
         WKWebView *browserWebView = [[WKWebView alloc] initWithFrame:self.webContainerView.bounds configuration:configuration];

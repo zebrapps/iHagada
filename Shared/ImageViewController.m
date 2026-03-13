@@ -17,7 +17,6 @@
 
 UIImage *finalImage;
 
-int cellWidth;
 
 static UIImage *IHLoadFirstAvailableOrFallback(NSArray *names, UIImage *fallback) {
     for (NSString *name in names) {

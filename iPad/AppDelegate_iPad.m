@@ -16,7 +16,6 @@
 @implementation AppDelegate_iPad
 
 @synthesize window, tabBarController;
-BOOL isHebrew;
 
 #pragma mark -
 #pragma mark Application lifecycle

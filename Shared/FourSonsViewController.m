@@ -32,7 +32,6 @@
 @synthesize landscapeIphoneBackground;
 @synthesize activitiyIndicator;
 
-int cellWidth; // Global parameter for all the other table view controllers;
 OverlayChooseImage *ovController; 
 
 - (void)setActivityIndicatorAnimating:(BOOL)animating {
@@ -213,7 +212,7 @@ OverlayChooseImage *ovController;
         [self.navigationController pushViewController:fourSonsChooseThemeViewController animated:NO];   
     } 
     
-    if (UIDeviceOrientationIsLandscape(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
+    if (UIInterfaceOrientationIsLandscape(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
         return;
     }
     
@@ -265,9 +264,9 @@ OverlayChooseImage *ovController;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-	if (UIDeviceOrientationIsPortrait(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
+	if (UIInterfaceOrientationIsPortrait(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
         [self rotatePortrait];
-	} else if (UIDeviceOrientationIsLandscape(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
+	} else if (UIInterfaceOrientationIsLandscape(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
         [self rotateLandscape];
 	}
 }
@@ -447,7 +446,7 @@ OverlayChooseImage *ovController;
     UIImage *originalPhoto = [[UIImage alloc] init];
     CGAffineTransform photoTransform = CGAffineTransformIdentity;
     
-    NSMutableDictionary *photoTransformDict;
+    NSMutableDictionary *photoTransformDict = nil;
     
     switch (photoNumber) {
         case 1: {
@@ -630,7 +629,7 @@ OverlayChooseImage *ovController;
 }
 
 - (UIImage *)currentFinalImageForSharing {
-    if (UIDeviceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
         return self.finalImageLandscape;
     }
 
@@ -717,7 +716,7 @@ OverlayChooseImage *ovController;
 
 - (void)prepareFinalPicture {
     
-    if (UIDeviceOrientationIsPortrait(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
+    if (UIInterfaceOrientationIsPortrait(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
 
 //        UIGraphicsBeginImageContext(CGSizeMake(photoView1.frame.size.width + photoView2.frame.size.width + 10, photoView1.frame.size.height + photoView3.frame.size.height + 39));        
         
@@ -756,7 +755,7 @@ OverlayChooseImage *ovController;
         finalImage = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         
-    } else if (UIDeviceOrientationIsLandscape(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
+    } else if (UIInterfaceOrientationIsLandscape(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
     
         #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 30200
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
@@ -954,9 +953,9 @@ OverlayChooseImage *ovController;
 
 	[self.delegate rotateOtherViewControllers:self toInterfaceOrientation:toInterfaceOrientation];	
 	
-	if (UIDeviceOrientationIsPortrait(toInterfaceOrientation)) {
+	if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
         [self rotatePortrait];
-	} else if (UIDeviceOrientationIsLandscape(toInterfaceOrientation)) {
+	} else if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
         [self rotateLandscape];
 	}	
     

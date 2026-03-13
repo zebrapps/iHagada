@@ -31,7 +31,7 @@
     UIImageView *smallPictureDelegatePortrait;
     UIImageView *smallPictureDelegateLandscape;
     
-    BOOL *didSelectNewPicture;
+    BOOL didSelectNewPicture;
     
     BOOL isFlipped;
     
@@ -49,7 +49,7 @@
 @property (nonatomic, retain) UIImageView *smallPictureDelegatePortrait;
 @property (nonatomic, retain) UIImageView *smallPictureDelegateLandscape;
 
-@property (assign)     BOOL *didSelectNewPicture;
+@property (assign) BOOL didSelectNewPicture;
 
 @property (assign) BOOL isFlipped;
 
@@ -67,4 +67,3 @@
 @end
 
 #pragma clang diagnostic pop
-

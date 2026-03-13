@@ -5,4 +5,9 @@
 #ifdef __OBJC__
     #import <Foundation/Foundation.h>
     #import <UIKit/UIKit.h>
+
+    extern BOOL isHebrew;
+    extern int cellWidth;
+
+    #pragma clang diagnostic ignored "-Wdeprecated-implementations"
 #endif

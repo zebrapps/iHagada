@@ -17,7 +17,6 @@
 @synthesize framePortrait,frameLandscape;
 @synthesize cancelButtonPortrait,confirmButtonPortrait,cancelButtonLandscape,confirmButtonLandscape;
 
-int cellWidth; // Global parameter for all the other table view controllers;
 OverlayChooseTemplate *ovTemplateController; 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -70,7 +69,7 @@ OverlayChooseTemplate *ovTemplateController;
     
     [self changeOtherScrollViewAfterPaging];  
     
-    if (UIDeviceOrientationIsLandscape(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
+    if (UIInterfaceOrientationIsLandscape(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
         return;
     }
     
@@ -125,7 +124,7 @@ OverlayChooseTemplate *ovTemplateController;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    if (UIDeviceOrientationIsPortrait(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
+    if (UIInterfaceOrientationIsPortrait(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
         [self.scrollViewPortrait setHidden:NO];
         [self.framePortrait setHidden:NO];
         [self.cancelButtonPortrait setHidden:NO];
@@ -135,7 +134,7 @@ OverlayChooseTemplate *ovTemplateController;
         [self.cancelButtonLandscape setHidden:YES];
         [self.confirmButtonLandscape setHidden:YES];
         
-	} else if (UIDeviceOrientationIsLandscape(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
+	} else if (UIInterfaceOrientationIsLandscape(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
         [self.scrollViewPortrait setHidden:YES];
         [self.framePortrait setHidden:YES];
         [self.cancelButtonPortrait setHidden:YES];
@@ -177,12 +176,12 @@ OverlayChooseTemplate *ovTemplateController;
 {
     int page = (int)pageControl.currentPage;
     
-    if (UIDeviceOrientationIsPortrait(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
+    if (UIInterfaceOrientationIsPortrait(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
         CGRect frame=scrollViewPortrait.frame;
         frame.origin.x = frame.size.width * page;
         frame.origin.y=0;
         [scrollViewPortrait scrollRectToVisible:frame animated:YES];
-	} else if (UIDeviceOrientationIsLandscape(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
+	} else if (UIInterfaceOrientationIsLandscape(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
         CGRect frame=scrollViewLandscape.frame;
         frame.origin.x = frame.size.width * page;
         frame.origin.y=0;
@@ -236,7 +235,7 @@ OverlayChooseTemplate *ovTemplateController;
     
     [self.delegate rotateOtherViewControllers:self toInterfaceOrientation:toInterfaceOrientation];
     
-    if (UIDeviceOrientationIsPortrait(toInterfaceOrientation)) {
+    if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
         
         cellWidth = 320;         
         [self.scrollViewPortrait setHidden:NO];
@@ -249,7 +248,7 @@ OverlayChooseTemplate *ovTemplateController;
         [self.confirmButtonLandscape setHidden:YES];
         
         
-    } else if (UIDeviceOrientationIsLandscape(toInterfaceOrientation)) {
+    } else if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
         
         cellWidth = 480;         
         [self.scrollViewPortrait setHidden:YES];

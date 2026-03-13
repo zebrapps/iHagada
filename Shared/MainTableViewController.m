@@ -22,8 +22,6 @@
 AppDelegate_iPhone *appDelegateIphone;
 AppDelegate_iPad *appDelegateIpad;
 
-BOOL isHebrew;
-int cellWidth;
 
 #define IS_IPHONE_5 ( fabs( ( double )[ [ UIScreen mainScreen ] bounds ].size.height - ( double )568 ) < DBL_EPSILON )
 
@@ -77,9 +75,9 @@ int cellWidth;
 	imageViewControllerEng = [[ImageViewController alloc] init];
 	self.imageViewControllerEng.delegate = self;	
 	
-	if (UIDeviceOrientationIsLandscape(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
+	if (UIInterfaceOrientationIsLandscape(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
 		cellWidth = 480;
-	} else if (UIDeviceOrientationIsPortrait(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
+	} else if (UIInterfaceOrientationIsPortrait(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
 		cellWidth = 320;
 	}
 	

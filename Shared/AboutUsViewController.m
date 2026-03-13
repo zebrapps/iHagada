@@ -18,7 +18,6 @@
 //@synthesize b_contactUs, b_sirimWebSite, b_zebrappsWebSite;
 @synthesize aboutUsViewPortrait, aboutUsViewLandscape;
 
-int cellWidth; // Global parameter for all the other table view controllers;
 
 - (void)displayAboutView:(UIView *)aboutView {
 	for (UIView *subview in [self.view subviews]) {
@@ -52,9 +51,9 @@ int cellWidth; // Global parameter for all the other table view controllers;
 	self.aboutUsViewPortrait.backgroundColor = [UIColor blackColor];
 	self.aboutUsViewLandscape.backgroundColor = [UIColor blackColor];
 	
-	if (UIDeviceOrientationIsPortrait(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
+	if (UIInterfaceOrientationIsPortrait(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
 		[self displayAboutView:aboutUsViewPortrait];
-	} else if (UIDeviceOrientationIsLandscape(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
+	} else if (UIInterfaceOrientationIsLandscape(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
 		[self displayAboutView:aboutUsViewLandscape];
 	}		
 }
@@ -133,10 +132,10 @@ int cellWidth; // Global parameter for all the other table view controllers;
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
 	[self.delegate rotateOtherViewControllers:self toInterfaceOrientation:toInterfaceOrientation];	
 	
-	if (UIDeviceOrientationIsPortrait(toInterfaceOrientation)) {
+	if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
 		cellWidth = 320;		
 		[self displayAboutView:self.aboutUsViewPortrait];
-	} else if (UIDeviceOrientationIsLandscape(toInterfaceOrientation)) {
+	} else if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
 		cellWidth = 480;		
 		[self displayAboutView:self.aboutUsViewLandscape];
 	}	
