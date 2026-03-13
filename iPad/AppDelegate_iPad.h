@@ -12,30 +12,15 @@
 #import "AboutUsViewController.h"
 #import "FourSonsViewController.h"
 
-#import "FbGraph.h"
-
 @interface AppDelegate_iPad : NSObject <UIApplicationDelegate, HagadaChaptersViewControllerDelegate, SongsIpadViewControllerDelegate, FourSonsViewControllerDelegate, AboutUsViewControllerDelegate> {
     UIWindow *window;
     UITabBarController *tabBarController;
-    
-    //Facebook Integration
-    FbGraph *fbGraph;
-    
-    //we'll use this to store a feed post (when you press 'post me/feed').
-    //when you press delete me/feed this is the post that's deleted
-    NSString *feedPostId;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet UITabBarController *tabBarController;
-
-//Facebook
-@property (nonatomic, retain) FbGraph *fbGraph;
-@property (nonatomic, retain) NSString *feedPostId;
-
 - (void)changeLanguage;
 - (void)rotateOtherViewControllers:sender toInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation;
 - (void) alertWithTitle:(NSString*)title messageForAlert:(NSString *)message titleForButton:(NSString *)buttonTitle;
 
 @end
-

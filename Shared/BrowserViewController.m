@@ -8,11 +8,8 @@
 
 #import "BrowserViewController.h"
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-
 @implementation BrowserViewController
-@synthesize webView, addressBar, activityIndicator, urlAddress;
+@synthesize webView, webContainerView, addressBar, activityIndicator, urlAddress;
 //@synthesize backButton;
 @synthesize delegate;
 
@@ -23,6 +20,17 @@ int cellWidth;
 	[super viewDidLoad];
 	
 	self.navigationItem.hidesBackButton = YES;
+    if (!self.webView) {
+        WKWebViewConfiguration *configuration = [[[WKWebViewConfiguration alloc] init] autorelease];
+        WKWebView *browserWebView = [[WKWebView alloc] initWithFrame:self.webContainerView.bounds configuration:configuration];
+        browserWebView.navigationDelegate = self;
+        browserWebView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        browserWebView.backgroundColor = [UIColor whiteColor];
+        browserWebView.opaque = NO;
+        self.webView = browserWebView;
+        [browserWebView release];
+        [self.webContainerView addSubview:self.webView];
+    }
 	/*
 	backButton = [[UIButton alloc] initWithFrame:CGRectMake(15, 5, 25, 45)];	
 	[backButton addTarget:self action:@selector(handleBack:) forControlEvents:UIControlEventTouchUpInside];
@@ -39,7 +47,7 @@ int cellWidth;
 	NSURL *url = [NSURL URLWithString:urlAddress];
 	NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
 	
-	[webView loadRequest:requestObj];
+	[self.webView loadRequest:requestObj];
 	[addressBar setText:urlAddress];
 
 	
@@ -49,7 +57,8 @@ int cellWidth;
 - (void)viewDidDisappear:(BOOL)animated {
 	[super viewDidDisappear:animated];
 	
-	[webView loadHTMLString:@"<html><head></head><body></body></html>" baseURL:nil];
+	[self.webView stopLoading];
+	[self.webView loadHTMLString:@"<html><head></head><body></body></html>" baseURL:nil];
 }
 
 /*
@@ -62,34 +71,42 @@ int cellWidth;
 	NSURL *url = [NSURL URLWithString:[addressBar text]];
 	NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
 	
-	[webView loadRequest:requestObj];
+	[self.webView loadRequest:requestObj];
 	[addressBar resignFirstResponder];
 	
 }
 
 - (IBAction)goBack:(id) sender {
-	[webView goBack];
+	[self.webView goBack];
 }
 
 - (IBAction)goForward:(id) sender {
-	[webView goForward];
+	[self.webView goForward];
 }
 
 
 - (IBAction)refresh:(id) sender {
-	[webView reload]; 
+	[self.webView reload]; 
 }
 
 - (IBAction)stopLoading:(id) sender {
-	[webView stopLoading]; 	
+	[self.webView stopLoading]; 	
 	[activityIndicator stopAnimating];
 }
 
-- (void)webViewDidStartLoad:(UIWebView *)webView {
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
 	[activityIndicator startAnimating];
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+	[activityIndicator stopAnimating];
+}
+
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+	[activityIndicator stopAnimating];
+}
+
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
 	[activityIndicator stopAnimating];
 }
 
@@ -98,23 +115,6 @@ int cellWidth;
 	// Pop the controller for back action
     [self.navigationController popViewControllerAnimated:YES];
 }
-
-/*
-- (BOOL)webView:(UIWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType {
-	
-	if (navigationType == UIWebViewNavigationTypeLinkClicked) {
-		NSURL *URL = [request URL];
-		if ([[URL scheme] isEqualToString:@"http"]) {
-			[addressBar setText:[URL absoluteString]];
-			[self gotoAddress:nil];
-		}
-		return NO;
-	}
-	return YES;
-	 
-}
-*/
-
 
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -152,6 +152,7 @@ int cellWidth;
 - (void)viewDidUnload {
 	
 	self.webView = nil;
+	self.webContainerView = nil;
 	self.addressBar = nil;
 	self.activityIndicator = nil;
 //	self.backButton = nil;
@@ -162,6 +163,7 @@ int cellWidth;
 
 - (void)dealloc {
 	[self.webView release];
+	[webContainerView release];
 	[addressBar release];
 	[activityIndicator release];
 //	[backButton release];
@@ -171,5 +173,3 @@ int cellWidth;
 
 
 @end
-
-#pragma clang diagnostic pop

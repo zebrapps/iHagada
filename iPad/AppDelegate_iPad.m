@@ -13,14 +13,9 @@
 #import "AboutUsViewController.h"
 #import "SongsIpadViewController.h"
 #import "RecipesIpadViewController.h"
-#import "CustomAlertView.h"
-
 @implementation AppDelegate_iPad
 
 @synthesize window, tabBarController;
-@synthesize fbGraph;
-@synthesize feedPostId;
-
 BOOL isHebrew;
 
 #pragma mark -
@@ -285,7 +280,7 @@ BOOL isHebrew;
     
 }
 -(void)alertOnMainThread:(NSArray *)arr {
-    CustomAlertView *alert = [[CustomAlertView alloc] initWithTitle:[arr objectAtIndex:0] message:[arr objectAtIndex:1] delegate:self cancelButtonTitle: [arr objectAtIndex:2] otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[arr objectAtIndex:0] message:[arr objectAtIndex:1] delegate:self cancelButtonTitle:[arr objectAtIndex:2] otherButtonTitles:nil];
 	[alert show];
 	[alert release];
 }
@@ -304,12 +299,6 @@ BOOL isHebrew;
 - (void)dealloc {
 	[tabBarController release];
     [window release];
-    
-    if (feedPostId != nil) {
-		[feedPostId release];
-	}
-	[fbGraph release];
-    
     [super dealloc];
 }
 

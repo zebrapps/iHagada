@@ -7,17 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#import <WebKit/WebKit.h>
 
 @protocol BrowserViewControllerDelegate;
 
-@interface BrowserViewController : UIViewController <UIWebViewDelegate> {
+@interface BrowserViewController : UIViewController <WKNavigationDelegate> {
 
 	id delegate;
 	
-	IBOutlet UIWebView *webView;
+	IBOutlet UIView *webContainerView;
 	IBOutlet UITextField *addressBar;
 	IBOutlet UIActivityIndicatorView *activityIndicator;
 	NSString *urlAddress;
@@ -27,7 +25,8 @@
 
 @property (nonatomic, assign) 	id delegate;
 
-@property (nonatomic,retain) UIWebView *webView;
+@property (nonatomic,retain) WKWebView *webView;
+@property (nonatomic,retain) IBOutlet UIView *webContainerView;
 @property (nonatomic,retain) UITextField *addressBar;
 @property (nonatomic,retain) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (copy) NSString *urlAddress;
@@ -44,8 +43,6 @@
 -(IBAction) handleBack:(id) sender;
 
 @end
-
-#pragma clang diagnostic pop
 
 /* This function will finally reach the app delegate for rotating all the other view controllers */
 @protocol BrowserViewControllerDelegate 

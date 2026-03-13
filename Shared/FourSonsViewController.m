@@ -8,7 +8,6 @@
 
 #import "FourSonsViewController.h"
 #import "ImagePickerViewController.h"
-#import "FBFunViewController.h"
 #import "OverlayChooseImage.h"
 
 #pragma clang diagnostic push

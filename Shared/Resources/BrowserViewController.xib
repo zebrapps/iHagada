@@ -9,7 +9,7 @@
             <connections>
                 <outlet property="activityIndicator" destination="27" id="28"/>
                 <outlet property="view" destination="1" id="25"/>
-                <outlet property="webView" destination="20" id="22"/>
+                <outlet property="webContainerView" destination="20" id="22"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -46,14 +46,11 @@
                         </barButtonItem>
                     </items>
                 </toolbar>
-                <webView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scalesPageToFit="YES" id="20">
+                <view contentMode="scaleToFill" id="20">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="436"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <connections>
-                        <outlet property="delegate" destination="-1" id="21"/>
-                    </connections>
-                </webView>
+                </view>
                 <activityIndicatorView hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="gray" id="27">
                     <rect key="frame" x="149" y="196" width="20" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>

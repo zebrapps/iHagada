@@ -14,8 +14,6 @@
 #import "AboutUsViewController.h"
 #import "SongsTableViewController.h"
 #import "FourSonsViewController.h"
-#import "CustomAlertView.h"
-
 static UIImage *TintedTabBarImageNamed(NSString *imageName, UIColor *tintColor) {
 	UIImage *sourceImage = [UIImage imageNamed:imageName];
 	if (sourceImage == nil) {
@@ -53,9 +51,6 @@ static void ConfigureTabBarItemTitleColors(UITabBarItem *tabBarItem) {
 @implementation AppDelegate_iPhone
 
 @synthesize window, tabBarController;
-
-@synthesize fbGraph;
-@synthesize feedPostId;
 
 //static languageType chosenLanguageType;
 
@@ -355,7 +350,7 @@ BOOL isHebrew;
     
 }
 -(void)alertOnMainThread:(NSArray *)arr {
-    CustomAlertView *alert = [[CustomAlertView alloc] initWithTitle:[arr objectAtIndex:0] message:[arr objectAtIndex:1] delegate:self cancelButtonTitle: [arr objectAtIndex:2] otherButtonTitles:nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[arr objectAtIndex:0] message:[arr objectAtIndex:1] delegate:self cancelButtonTitle:[arr objectAtIndex:2] otherButtonTitles:nil];
 	[alert show];
 	[alert release];
 }
@@ -386,12 +381,6 @@ BOOL isHebrew;
 - (void)dealloc {
 	[tabBarController release];
     [window release];
-    
-    if (feedPostId != nil) {
-		[feedPostId release];
-	}
-	[fbGraph release];
-    
     [super dealloc];
 }
 
