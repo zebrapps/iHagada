@@ -15,7 +15,7 @@
 
 - (id) initWithPageSize:(CGSize)aPageSize
 {
-	if ([super init]) {
+	if ((self = [super init])) {
 		pageSize = aPageSize;
 		pageCache = [[NSMutableDictionary alloc] init];
 	}
@@ -47,9 +47,6 @@
 	CGImageRef image = CGBitmapContextCreateImage(context);
 	CGContextRelease(context);
 	
-	[UIImage imageWithCGImage:image];
-	CGImageRelease(image);
-	
 	return image;
 }
 
@@ -62,6 +59,7 @@
 	if (!pageImage) {
 		CGImageRef pageCGImage = [self imageForPageIndex:pageIndex];
 		pageImage = [UIImage imageWithCGImage:pageCGImage];
+		CGImageRelease(pageCGImage);
 		@synchronized (pageCache) {
 			[pageCache setObject:pageImage forKey:pageIndexNumber];
 		}

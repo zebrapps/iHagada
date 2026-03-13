@@ -8,6 +8,7 @@
 
 #import "RecipesTableViewController.h"
 #import "RecipeViewController.h"
+#import "Utilities.h"
 
 @implementation RecipesTableViewController
 
@@ -116,6 +117,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    IHAnalyticsLogScreen(@"Recipes Screen", @"Recipes Screen", @"RecipesTableViewController");
 
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     [self applyCurrentHeaderImage];
@@ -549,6 +551,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	IHAnalyticsLogAction(@"open_recipe", @"recipes_list", @"Recipes", [imagesNames objectAtIndex:indexPath.row]);
 	
 	RecipeViewController *recipeViewController = [[RecipeViewController alloc] initWithNibName:@"RecipeViewController" bundle:nil];
 	[recipeViewController setImageName:[imagesNames objectAtIndex:indexPath.row]];

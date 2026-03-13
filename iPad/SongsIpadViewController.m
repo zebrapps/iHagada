@@ -8,6 +8,7 @@
 
 #import "SongsIpadViewController.h"
 #import "SongViewController.h"
+#import "Utilities.h"
 
 @implementation SongsIpadViewController
 
@@ -43,6 +44,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+	IHAnalyticsLogScreen(@"ipad_songs", (isHebrew ? @"iPad Songs Hebrew" : @"iPad Songs English"), @"SongsIpadViewController");
 	
 	if (isHebrew) {
 		[self.songsImageViewEng setHidden:YES];
@@ -85,6 +87,7 @@
 - (IBAction) selectSong:(id)sender
 {	
     NSInteger selectedPage = 0;
+    NSString *songName = [NSString stringWithFormat:@"song_%ld", (long)[(UIButton*)sender tag]];
 	if (isHebrew) {
 		/* The tag of the button is set in Interface builder */
 		switch ([(UIButton*)sender tag]) {
@@ -116,6 +119,7 @@
 			case 9: simcha raba song is being called through selectOtherSong because its not in the hagada
 				*/
 		}
+		IHAnalyticsLogAction(@"open_song", @"ipad_songs", @"iPad Songs Hebrew", songName);
 		[[NSUserDefaults standardUserDefaults] setInteger:selectedPage forKey:@"currentPageHeb"];
 		[self.imageViewControllerHeb setHidesBottomBarWhenPushed:YES];
 		[self.navigationController pushViewController:imageViewControllerHeb animated:YES];	 
@@ -152,6 +156,7 @@
 				break;
 				 */
 		}
+		IHAnalyticsLogAction(@"open_song", @"ipad_songs", @"iPad Songs English", songName);
 		[[NSUserDefaults standardUserDefaults] setInteger:selectedPage forKey:@"currentPage"];		
 		[self.imageViewControllerEng setHidesBottomBarWhenPushed:YES];
 		[self.navigationController setNavigationBarHidden:YES animated:NO];		
@@ -162,6 +167,7 @@
 }
 
 - (IBAction) selectOtherSong:(id)sender {
+	IHAnalyticsLogAction(@"open_song_special", @"ipad_songs", (isHebrew ? @"iPad Songs Hebrew" : @"iPad Songs English"), @"simcha_raba");
 	/* SongViewController for simcha raba */			
 	SongViewController *songViewController = [[SongViewController alloc] initWithNibName:@"SongViewControllerIpad" bundle:nil];
 	[songViewController setImageName:@"simhaRaba_ipad.jpg"];

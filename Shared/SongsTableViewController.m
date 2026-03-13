@@ -7,6 +7,7 @@
 //
 
 #import "SongsTableViewController.h"
+#import "Utilities.h"
 #import "SongViewController.h"
 
 @implementation SongsTableViewController
@@ -113,6 +114,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    IHAnalyticsLogScreen(@"Songs Screen", @"Songs Screen", @"SongsTableViewController");
 
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     [self applyCurrentHeaderImage];
@@ -581,6 +583,7 @@
 		}
 		
 		if (indexPath.row == 8) {
+			IHAnalyticsLogAction(@"open_song_special", @"songs_list", @"Songs Hebrew", @"simcha_raba");
 			/* SongViewController for simcha raba */			
 			SongViewController *songViewController = [[SongViewController alloc] initWithNibName:@"SongViewController" bundle:nil];
 			[songViewController setImageName:@"simchaRaba_iphone.jpg"];
@@ -590,6 +593,7 @@
 			[self.navigationController pushViewController:songViewController animated:YES];
 			[songViewController release];
 		} else {
+			IHAnalyticsLogAction(@"open_song", @"songs_list", @"Songs Hebrew", [NSString stringWithFormat:@"row_%ld_page_%ld", (long)indexPath.row, (long)selectedPage]);
 			[[NSUserDefaults standardUserDefaults] setInteger:selectedPage forKey:@"currentPageHeb"];	
 			[self.imageViewControllerHeb setHidesBottomBarWhenPushed:YES];
 			[self.navigationController setNavigationBarHidden:YES animated:NO];		
@@ -638,7 +642,8 @@
 			[self.navigationController pushViewController:songViewController animated:YES];
 			[songViewController release];
 		} else {
-			[[NSUserDefaults standardUserDefaults] setInteger:selectedPage forKey:@"currentPage"];		
+		IHAnalyticsLogAction(@"open_song", @"songs_list", @"Songs English", [NSString stringWithFormat:@"row_%ld_page_%ld", (long)indexPath.row, (long)selectedPage]);
+		[[NSUserDefaults standardUserDefaults] setInteger:selectedPage forKey:@"currentPage"];		
 			[self.imageViewControllerEng setHidesBottomBarWhenPushed:YES];
 			[self.navigationController setNavigationBarHidden:YES animated:NO];		
 			[self.navigationController pushViewController:imageViewControllerEng animated:YES];					

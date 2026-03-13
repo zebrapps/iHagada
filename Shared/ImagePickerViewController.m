@@ -7,6 +7,7 @@
 //
 
 #import "ImagePickerViewController.h"
+#import "Utilities.h"
 #import "FourSonsViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -58,6 +59,7 @@
 }
 
 -(IBAction)takeOrChoosePicture:(id)sender {
+	IHAnalyticsLogAction(@"pick_image_source", @"image_picker", @"Image Picker", ([sender tag] == 1 ? @"camera" : @"photo_library"));
 	
     if (!picker) {
         
@@ -193,6 +195,8 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    IHAnalyticsLogScreen(@"image_picker", @"Image Picker", @"ImagePickerViewController");
     if (!self.topImage.image && [self.delegate respondsToSelector:@selector(setCurrentImageInImagePicker)]) {
         // When image is not allocated yet
         [self.delegate setCurrentImageInImagePicker];
@@ -203,6 +207,7 @@
 }
 
 - (IBAction)confirmPicture {
+    IHAnalyticsLogAction(@"confirm_image", @"image_picker", @"Image Picker", [NSString stringWithFormat:@"photo_slot_%d", [self.delegate photoNumber]]);
         
     int photoNumberChosen = [self.delegate photoNumber];
     NSString *imageName = nil;
@@ -375,12 +380,14 @@
     
     NSString *fullPathToFileTransform = [documentsDirectory stringByAppendingPathComponent:imageTransformKey];
     [imageTransformDict writeToFile:fullPathToFileTransform atomically:YES];
+    [imageTransformDict release];
      
     [self.delegate flipsideViewControllerDidFinish];
     self.delegate = nil;
 }
 
 - (IBAction)cancelPicture {
+    IHAnalyticsLogAction(@"cancel_image", @"image_picker", @"Image Picker", @"cancel");
     [self.delegate flipsideViewControllerDidFinish];
     self.delegate = nil;
 }
@@ -417,28 +424,32 @@
         
         //bitmap = CGBitmapContextCreate(NULL, targetWidth, targetHeight, CGImageGetBitsPerComponent(imageRef), CGImageGetBytesPerRow(imageRef), colorSpaceInfo, bitmapInfo);
         
+        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
         bitmap = CGBitmapContextCreate(
                                                     NULL,
                                                     targetWidth,
                                                     targetHeight,
                                                     8, /* bits per channel */
                                                     (targetWidth * 4), /* 4 channels per pixel * numPixels/row */
-                                                    CGColorSpaceCreateDeviceRGB(),
+                                                    colorSpace,
                                                     (CGBitmapInfo)kCGImageAlphaPremultipliedLast
-                                                    );        
+                                                    );
+        CGColorSpaceRelease(colorSpace);
         
     } else {
 //        bitmap = CGBitmapContextCreate(NULL, targetHeight, targetWidth, CGImageGetBitsPerComponent(imageRef), CGImageGetBytesPerRow(imageRef), colorSpaceInfo, bitmapInfo);
         
+        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
         bitmap = CGBitmapContextCreate(
                                        NULL,
                                        targetHeight,
                                        targetWidth,
                                        8, /* bits per channel */
                                        (targetHeight * 4), /* 4 channels per pixel * numPixels/row */
-                                       CGColorSpaceCreateDeviceRGB(),
+                                       colorSpace,
                                        (CGBitmapInfo)kCGImageAlphaPremultipliedLast
-                                       );        
+                                       );
+        CGColorSpaceRelease(colorSpace);
         
     }   
     
@@ -488,14 +499,16 @@
     // NSLog(@"DATAAAAA = %lu,%lu,%@,%d",CGImageGetBitsPerComponent(imageRef),CGImageGetBytesPerRow(imageRef),colorSpaceInfo,bitmapInfo);    
 //    bitmap = CGBitmapContextCreate(NULL, targetWidth, targetHeight, CGImageGetBitsPerComponent(imageRef), CGImageGetBytesPerRow(imageRef)/*6140*/, colorSpaceInfo, bitmapInfo);
     
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     bitmap = CGBitmapContextCreate(NULL,
                                    targetWidth,
                                    targetHeight,
                                    8, /* bits per channel */
                                    (targetWidth * 4), /* 4 channels per pixel * numPixels/row */
-                                   CGColorSpaceCreateDeviceRGB(),
+                                   colorSpace,
                                    (CGBitmapInfo)kCGImageAlphaPremultipliedLast
-                                   ); 
+                                   );
+    CGColorSpaceRelease(colorSpace);
     
     
 //    CGContextTranslateCTM(bitmap, 20, 20);
@@ -568,6 +581,8 @@
     CGImageRef ref = CGBitmapContextCreateImage(bitmap);
     
     UIImage* newImage = [UIImage imageWithCGImage:ref];
+    CGContextRelease(bitmap);
+    CGImageRelease(ref);
     
     // NSLog(@"newImage image size = %f,%f",newImage.size.width,newImage.size.height);
     return newImage; 
@@ -576,6 +591,12 @@
 - (void)dealloc
 {
     [selectedPickerImage release];
+    [picker release];
+    [popover release];
+    [topImage release];
+    [shadowsView release];
+    [smallPictureDelegatePortrait release];
+    [smallPictureDelegateLandscape release];
     [super dealloc];
 }
 
@@ -692,6 +713,7 @@
 }
 
 - (IBAction)flipImage {
+    IHAnalyticsLogAction(@"flip_image", @"image_picker", @"Image Picker", @"flip");
     
     if (isFlipped) {
         isFlipped = NO;
@@ -738,8 +760,16 @@
 }
 
 - (void)viewDidUnload {
+	[super viewDidUnload];
 	// Release any retained subviews of the main view.
 	// e.g. self.myOutlet = nil;
+    self.picker = nil;
+    self.popover = nil;
+    self.selectedPickerImage = nil;
+    self.topImage = nil;
+    self.shadowsView = nil;
+    self.smallPictureDelegatePortrait = nil;
+    self.smallPictureDelegateLandscape = nil;
 }
 
 @end

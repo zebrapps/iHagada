@@ -58,7 +58,7 @@ UIImage *finalImage;
 */
 
 - (id)init {		
-    if (self == [super init]) {
+    if ((self = [super init])) {
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 30200
         BOOL isiPad = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
         UIImage *fallback = [UIImage imageNamed:(isiPad ? @"Default-Portrait~ipad.png" : @"Default.png")];
@@ -94,14 +94,20 @@ UIImage *finalImage;
 	#if  __IPHONE_OS_VERSION_MAX_ALLOWED >= 30200
 	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
 		if (UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation])) {
-			self.backButton = [[UIButton alloc] initWithFrame:CGRectMake(55, 32, 38, 37)];		
+			UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(55, 32, 38, 37)];
+			self.backButton = button;
+			[button release];
 		} else if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
-			self.backButton = [[UIButton alloc] initWithFrame:CGRectMake(50, 55, 38, 37)];					
+			UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(50, 55, 38, 37)];
+			self.backButton = button;
+			[button release];
 		}
 		UIImage *image = [UIImage imageNamed: @"backArrow_HD.png"];		
 		[self.backButton setImage:image forState:0];		
 	} else {
-		self.backButton = [[UIButton alloc] initWithFrame:CGRectMake(35, 0, 25, 45)];			
+		UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(35, 0, 25, 45)];
+		self.backButton = button;
+		[button release];
 		UIImage *image = [UIImage imageNamed: @"backArrow.png"];
 		[self.backButton setImage:image forState:0];		
 	}
@@ -112,20 +118,27 @@ UIImage *finalImage;
 	
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    IHAnalyticsLogScreen(@"hagada_image_hebrew", [NSString stringWithFormat:@"Page %ld", (long)[[NSUserDefaults standardUserDefaults] integerForKey:@"currentPageHeb"]], @"ImageViewControllerHeb");
+}
+
 - (void)viewDidUnload {
 	[self.backButton removeFromSuperview];
 	self.backButton = nil;
+	[super viewDidUnload];
 }
 
 - (void) handleBack:(id)sender
 {
+	IHAnalyticsLogAction(@"back_tap", @"hagada_image_hebrew", @"Hagada Image Hebrew", @"back");
 	// Pop the controller for back action
     [self.navigationController popViewControllerAnimated:YES];
 }
 
 
 - (void)dealloc {
-	[self.backButton release];
+	[backButton release];
 	[images release];
     [super dealloc];
 }

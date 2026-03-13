@@ -9,6 +9,7 @@
 #import "FourSonsViewController.h"
 #import "ImagePickerViewController.h"
 #import "OverlayChooseImage.h"
+#import "Utilities.h"
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -55,8 +56,36 @@ OverlayChooseImage *ovController;
 - (void)dealloc
 {
     // NSLog(@"FourSonsViewController dealloc");    
+    [photoView1 release];
+    [photoView2 release];
+    [photoView3 release];
+    [photoView4 release];
+    [photoViewLandscape1 release];
+    [photoViewLandscape2 release];
+    [photoViewLandscape3 release];
+    [photoViewLandscape4 release];
+    [basePhotoView1 release];
+    [basePhotoView2 release];
+    [basePhotoView3 release];
+    [basePhotoView4 release];
     [landscapeScrollView release];
     [basePhotoViewLandscape1 release];
+    [basePhotoViewLandscape2 release];
+    [basePhotoViewLandscape3 release];
+    [basePhotoViewLandscape4 release];
+    [finalImage release];
+    [finalImagePortrait release];
+    [finalImageLandscape release];
+    [imagePickerViewController release];
+    [fourSonsChooseThemeViewController release];
+    [chachamFileName release];
+    [rashaFileName release];
+    [tamFileName release];
+    [sheinoFileName release];
+    [landscapeButtons release];
+    [landscapeIphoneBackground release];
+    [activitiyIndicator release];
+    [ovController release];
     [super dealloc];
 }
 
@@ -263,6 +292,7 @@ OverlayChooseImage *ovController;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    IHAnalyticsLogScreen(@"4Sons Screen", @"4Sons Screen", @"FourSonsViewController");
 
 	if (UIInterfaceOrientationIsPortrait(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
         [self rotatePortrait];
@@ -280,6 +310,7 @@ OverlayChooseImage *ovController;
 }
 
 - (IBAction)clearFaces {
+    IHAnalyticsLogAction(@"clear_faces", @"four_sons_screen", @"Four Sons", @"clear_faces");
         
     [[self photoView1] setImage:nil];
     [[self photoView2] setImage:nil];
@@ -329,6 +360,7 @@ OverlayChooseImage *ovController;
 
 - (IBAction)chooseTheme {
 //    [self presentModalViewController:fourSonsChooseThemeViewController animated:YES];
+    IHAnalyticsLogAction(@"choose_theme", @"four_sons_screen", @"Four Sons", @"choose_theme");
 
     [self.activitiyIndicator startAnimating];
     
@@ -415,6 +447,7 @@ OverlayChooseImage *ovController;
 }
 
 - (IBAction)choosePhoto:(id)sender {
+    IHAnalyticsLogAction(@"choose_photo", @"four_sons_screen", @"Four Sons", [NSString stringWithFormat:@"photo_slot_%ld", (long)[sender tag]]);
     
     [self removeOverlayView];
 
@@ -614,6 +647,7 @@ OverlayChooseImage *ovController;
 }
 
 -(IBAction)saveFinalPictureToLibrary {
+    IHAnalyticsLogAction(@"save_photo", @"four_sons_screen", @"Four Sons", @"save_to_library");
     [self setActivityIndicatorAnimating:YES];
     
     [self prepareFinalPicture];
@@ -669,6 +703,7 @@ OverlayChooseImage *ovController;
 }
 
 -(IBAction)showActionSheet:(id)sender {
+    IHAnalyticsLogAction(@"open_share_sheet", @"four_sons_screen", @"Four Sons", @"share_sheet");
     
     NSString *shareAlertTitle = @"שתף תמונה";
     NSString *shareAlertCancel = @"ביטול";
@@ -707,6 +742,7 @@ OverlayChooseImage *ovController;
 }
 
 - (IBAction)sendFinalPicture {
+    IHAnalyticsLogAction(@"send_picture_mail", @"four_sons_screen", @"Four Sons", @"mail");
     
     [self setActivityIndicatorAnimating:YES];
     

@@ -8,6 +8,7 @@
 
 #import "RecipeViewController.h"
 #import "RecipesTableViewController.h"
+#import "Utilities.h"
 
 @implementation RecipeViewController
 
@@ -60,6 +61,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    IHAnalyticsLogScreen(@"recipe_detail", imageName, @"RecipeViewController");
 
 	if (UIInterfaceOrientationIsPortrait(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
 	#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 30200								
@@ -153,6 +155,7 @@
 
 - (IBAction) handleBack:(id)sender
 {	
+	IHAnalyticsLogAction(@"back_tap", @"recipe_detail", imageName, @"back");
 	// Pop the controller for back action
     [self.navigationController popViewControllerAnimated:YES];
 }

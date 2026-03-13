@@ -7,6 +7,7 @@
 //
 
 #import "HagadaChaptersViewController.h"
+#import "Utilities.h"
 
 
 @implementation HagadaChaptersViewController
@@ -85,6 +86,7 @@
 // Implemented viewWillAppear instead of viewDidLoad to do additional before after loading the view.
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+	IHAnalyticsLogScreen(@"ipad_hagada_chapters", (isHebrew ? @"iPad Hagada Chapters Hebrew" : @"iPad Hagada Chapters English"), @"HagadaChaptersViewController");
 	
 	[self.navigationController setNavigationBarHidden:YES animated:NO];
     [[self navigationItem] setPrompt:@""];
@@ -177,6 +179,7 @@
 - (IBAction) selectChapter:(id)sender
 {	
     NSInteger selectedPage = 0;
+    NSString *selectedButton = [NSString stringWithFormat:@"chapter_%ld", (long)[(UIButton*)sender tag]];
 	if (isHebrew) {
 		switch ([(UIButton*)sender tag]) {
 			case 1: 
@@ -222,6 +225,7 @@
 				selectedPage = 58;
 				break;				
 		}
+		IHAnalyticsLogAction(@"open_chapter", @"ipad_hagada_chapters", @"iPad Hagada Chapters Hebrew", selectedButton);
 		[[NSUserDefaults standardUserDefaults] setInteger:selectedPage forKey:@"currentPageHeb"];
 		[self.imageViewControllerHeb setHidesBottomBarWhenPushed:YES];
 		[self.navigationController pushViewController:imageViewControllerHeb animated:YES];	 
@@ -270,6 +274,7 @@
 				selectedPage = 78;
 				break;		
 		}
+		IHAnalyticsLogAction(@"open_chapter", @"ipad_hagada_chapters", @"iPad Hagada Chapters English", selectedButton);
 		[[NSUserDefaults standardUserDefaults] setInteger:selectedPage forKey:@"currentPage"];		
 		[self.imageViewControllerEng setHidesBottomBarWhenPushed:YES];
 		[self.navigationController setNavigationBarHidden:YES animated:NO];		
@@ -280,6 +285,7 @@
 
 - (IBAction)changeLanguage:(id)sender
 {
+	IHAnalyticsLogAction(@"change_language", @"ipad_hagada_chapters", @"iPad Hagada Chapters", ([(UIButton *)sender isSelected] ? @"hebrew" : @"english"));
 	if ([sender isSelected]) {
 		[sender setSelected:NO];
 		[self.delegate changeLanguage];

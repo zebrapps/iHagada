@@ -7,6 +7,7 @@
 //
 
 #import "BrowserViewController.h"
+#import "Utilities.h"
 
 @implementation BrowserViewController
 @synthesize webView, webContainerView, addressBar, activityIndicator, urlAddress;
@@ -85,6 +86,7 @@ static NSArray *IHBrowserToolbarItems(id target) {
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+	IHAnalyticsLogScreen(@"browser_screen", urlAddress, @"BrowserViewController");
     
 	[self.navigationController setNavigationBarHidden:YES];
 	
@@ -112,6 +114,7 @@ static NSArray *IHBrowserToolbarItems(id target) {
  */
 
 - (IBAction)gotoAddress:(id) sender {
+	IHAnalyticsLogAction(@"browser_open_url", @"browser_screen", urlAddress, [addressBar text]);
 	NSURL *url = [NSURL URLWithString:[addressBar text]];
 	NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
 	
@@ -121,19 +124,23 @@ static NSArray *IHBrowserToolbarItems(id target) {
 }
 
 - (IBAction)goBack:(id) sender {
+	IHAnalyticsLogAction(@"browser_back", @"browser_screen", urlAddress, @"back");
 	[self.webView goBack];
 }
 
 - (IBAction)goForward:(id) sender {
+	IHAnalyticsLogAction(@"browser_forward", @"browser_screen", urlAddress, @"forward");
 	[self.webView goForward];
 }
 
 
 - (IBAction)refresh:(id) sender {
+	IHAnalyticsLogAction(@"browser_refresh", @"browser_screen", urlAddress, @"refresh");
 	[self.webView reload]; 
 }
 
 - (IBAction)stopLoading:(id) sender {
+	IHAnalyticsLogAction(@"browser_stop", @"browser_screen", urlAddress, @"stop");
 	[self.webView stopLoading]; 	
 	[activityIndicator stopAnimating];
 }
@@ -156,6 +163,7 @@ static NSArray *IHBrowserToolbarItems(id target) {
 
 - (IBAction) handleBack:(id)sender
 {
+	IHAnalyticsLogAction(@"back_tap", @"browser_screen", urlAddress, @"back");
 	// Pop the controller for back action
     [self.navigationController popViewControllerAnimated:YES];
 }

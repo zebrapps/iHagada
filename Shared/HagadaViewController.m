@@ -7,6 +7,7 @@
 //
 
 #import "HagadaViewController.h"
+#import "Utilities.h"
 
 @implementation HagadaViewController
 
@@ -39,6 +40,11 @@
 	
 }
 
+- (void)HagadaView:(HagadaView *)aHagadaView didTurnToPageAtIndex:(NSUInteger)pageIndex {
+    [[NSUserDefaults standardUserDefaults] setInteger:pageIndex forKey:@"currentPage"];
+    IHAnalyticsLogAction(@"turn_page", @"hagada_reader_english", [NSString stringWithFormat:@"Page %ld", (long)pageIndex], [NSString stringWithFormat:@"page_%ld", (long)pageIndex]);
+}
+
 #pragma mark -
 #pragma mark  UIViewController methods
 
@@ -51,6 +57,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+    IHAnalyticsLogScreen(@"Hagada English Screen", [NSString stringWithFormat:@"Page %ld", (long)[[NSUserDefaults standardUserDefaults] integerForKey:@"currentPage"]], @"HagadaViewController");
     [self updateViewingModeForCurrentLayout];
 	hagadaView.dataSource = self;
 	hagadaView.delegate = self;
@@ -64,6 +71,7 @@
 }
 
 -(void)viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:animated];
 	[self.navigationController setNavigationBarHidden:NO];	
 }
 

@@ -8,6 +8,7 @@
 
 #import "SongViewController.h"
 #import "SongsTableViewController.h"
+#import "Utilities.h"
 
 
 @implementation SongViewController
@@ -69,6 +70,8 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	IHAnalyticsLogScreen(@"song_detail", imageName, @"SongViewController");
 	if (UIInterfaceOrientationIsPortrait(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
 	#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 30200								
 		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
@@ -162,6 +165,7 @@
 
 - (void) handleBack:(id)sender
 {	
+	IHAnalyticsLogAction(@"back_tap", @"song_detail", imageName, @"back");
 	// Pop the controller for back action
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -181,6 +185,7 @@
 
 
 - (void)dealloc {
+	[imageName release];
 	[songImageView release];
 	[songScrollView release];
     [super dealloc];

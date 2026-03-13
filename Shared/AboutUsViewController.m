@@ -7,6 +7,7 @@
 //
 
 #import "AboutUsViewController.h"
+#import "Utilities.h"
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -17,7 +18,6 @@
 //@synthesize aboutUsImageViewReg, aboutUsImageViewWide;
 //@synthesize b_contactUs, b_sirimWebSite, b_zebrappsWebSite;
 @synthesize aboutUsViewPortrait, aboutUsViewLandscape;
-
 
 - (void)displayAboutView:(UIView *)aboutView {
 	for (UIView *subview in [self.view subviews]) {
@@ -45,6 +45,7 @@
 // Implemented viewWillAppear instead of viewDidLoad to do additional before after loading the view.
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+	IHAnalyticsLogScreen(@"About Screen", @"About Screen", @"AboutUsViewController");
 	
 	[self.navigationController setNavigationBarHidden:YES animated:NO];
 	self.view.backgroundColor = [UIColor blackColor];
@@ -61,6 +62,7 @@
 // Send Mail Methods
 - (IBAction) SendMail
 {
+	IHAnalyticsLogAction(@"about_send_mail", @"about_screen", @"About", @"contact_zebrapps");
 	if ([MFMailComposeViewController canSendMail]) {
 		MFMailComposeViewController *composer = [[MFMailComposeViewController alloc] init];
 		composer.mailComposeDelegate = self;
@@ -149,24 +151,31 @@
  
 - (void) handleBack:(id)sender
 {
+	IHAnalyticsLogAction(@"back_tap", @"about_screen", @"About", @"back");
 	// Pop the controller for back action
     [self.navigationController popViewControllerAnimated:NO];
 }
 
 - (IBAction) sirimWebSite {
+    IHAnalyticsLogAction(@"about_open_sirim", @"about_screen", @"About", @"sirim");
     // Link disabled by request: keep action connected but intentionally no-op.
     return;
 }
 
 - (IBAction) zebrappsWebSite {
+	IHAnalyticsLogAction(@"about_open_zebrapps", @"about_screen", @"About", @"zebrapps");
 
 	if (!self.browserViewController) {
 		
 		#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 30200
 		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-			self.browserViewController = [[BrowserViewController alloc] initWithNibName:@"BrowserViewControllerHD" bundle:nil];
+			BrowserViewController *controller = [[BrowserViewController alloc] initWithNibName:@"BrowserViewControllerHD" bundle:nil];
+			self.browserViewController = controller;
+			[controller release];
 		} else {
-			self.browserViewController = [[BrowserViewController alloc] initWithNibName:@"BrowserViewController" bundle:nil];									
+			BrowserViewController *controller = [[BrowserViewController alloc] initWithNibName:@"BrowserViewController" bundle:nil];
+			self.browserViewController = controller;
+			[controller release];
 		}
 		#endif
 		
@@ -197,6 +206,9 @@
 
 
 - (void)dealloc {
+	[browserViewController release];
+	[aboutUsViewPortrait release];
+	[aboutUsViewLandscape release];
     [super dealloc];
 }
 

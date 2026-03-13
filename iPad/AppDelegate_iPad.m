@@ -13,6 +13,8 @@
 #import "AboutUsViewController.h"
 #import "SongsIpadViewController.h"
 #import "RecipesIpadViewController.h"
+#import "Utilities.h"
+@import FirebaseCore;
 
 static UIImage *TintedTabBarImageNamed(NSString *imageName, UIColor *tintColor) {
     UIImage *sourceImage = [UIImage imageNamed:imageName];
@@ -75,8 +77,13 @@ static void ConfigureTabBarItemTitleColors(UITabBarItem *tabBarItem) {
 	[NSThread sleepForTimeInterval:1];
 	window.backgroundColor = background;
 	[background release];
-	*/
-	
+*/
+
+	if ([FIRApp defaultApp] == nil) {
+		[FIRApp configure];
+	}
+	IHAnalyticsLogAction(@"app_open_manual", @"app_launch", @"App Launch", @"ipad");
+
 	[NSThread sleepForTimeInterval:1];
 	[window setBackgroundColor:[UIColor blackColor]];
 	
@@ -89,6 +96,7 @@ static void ConfigureTabBarItemTitleColors(UITabBarItem *tabBarItem) {
 	hagadaChaptersViewController = [[HagadaChaptersViewController alloc] initWithNibName:@"HagadaChaptersViewController" bundle:nil];
 	hagadaChaptersViewController.delegate = self;
 		RootViewController *rootViewController = [[RootViewController alloc] initWithRootViewController:hagadaChaptersViewController];	
+	[hagadaChaptersViewController release];
 		
 		rootViewController.tabBarItem.title = @"פרקי ההגדה";
     rootViewController.tabBarItem.image = WhiteTabBarImageNamed(@"bookmarks.png");
@@ -96,18 +104,21 @@ static void ConfigureTabBarItemTitleColors(UITabBarItem *tabBarItem) {
     ConfigureTabBarItemTitleColors(rootViewController.tabBarItem);
 		
 		[localViewControllersArray addObject:rootViewController];	
+		[rootViewController release];
 	
 	SongsIpadViewController *songsIpadViewController;
 	songsIpadViewController = [[SongsIpadViewController alloc] initWithNibName:@"SongsIpadViewController" bundle:nil];
 	songsIpadViewController.delegate = self;	
 		RootViewController *songsRootViewController = [[RootViewController alloc] initWithRootViewController:songsIpadViewController];	
+	[songsIpadViewController release];
 		
 		songsRootViewController.tabBarItem.title = @"שירים";
 		songsRootViewController.tabBarItem.image = WhiteTabBarImageNamed(@"note_icon.png");
         songsRootViewController.tabBarItem.selectedImage = BlueTabBarImageNamed(@"note_icon.png");
         ConfigureTabBarItemTitleColors(songsRootViewController.tabBarItem);
 		
-		[localViewControllersArray addObject:songsRootViewController];
+			[localViewControllersArray addObject:songsRootViewController];
+			[songsRootViewController release];
 	
 	/*
 	RecipesTableViewController *recipesTableViewController;
@@ -117,26 +128,30 @@ static void ConfigureTabBarItemTitleColors(UITabBarItem *tabBarItem) {
 	recipesIpadViewController = [[RecipesIpadViewController alloc] initWithNibName:@"RecipesIpadViewController" bundle:nil];
 	recipesIpadViewController.delegate = self;
 		RootViewController *recipesRootViewController = [[RootViewController alloc] initWithRootViewController:recipesIpadViewController];	
+	[recipesIpadViewController release];
 		
 		recipesRootViewController.tabBarItem.title = @"מתכונים לחג";
     recipesRootViewController.tabBarItem.image = WhiteTabBarImageNamed(@"recipes_icon.png");
     recipesRootViewController.tabBarItem.selectedImage = BlueTabBarImageNamed(@"recipes_icon.png");
     ConfigureTabBarItemTitleColors(recipesRootViewController.tabBarItem);
 		
-		[localViewControllersArray addObject:recipesRootViewController];
+			[localViewControllersArray addObject:recipesRootViewController];
+			[recipesRootViewController release];
 	
 	FourSonsViewController *fourSonsViewController = [[FourSonsViewController alloc] initWithNibName:@"FourSonsViewControllerHD" bundle:nil];
     
 	fourSonsViewController.delegate = self;
     
     RootViewController *fourSonsRootViewController = [[RootViewController alloc] initWithRootViewController:fourSonsViewController];	
+	[fourSonsViewController release];
     
 		fourSonsRootViewController.tabBarItem.title = @"ארבעה בנים";
     fourSonsRootViewController.tabBarItem.image = WhiteTabBarImageNamed(@"mask_icon.png");
     fourSonsRootViewController.tabBarItem.selectedImage = BlueTabBarImageNamed(@"mask_icon.png");
     ConfigureTabBarItemTitleColors(fourSonsRootViewController.tabBarItem);
     
-		[localViewControllersArray addObject:fourSonsRootViewController];
+			[localViewControllersArray addObject:fourSonsRootViewController];
+			[fourSonsRootViewController release];
     
 	AboutUsViewController *aboutUsViewController;
 	
@@ -148,6 +163,7 @@ static void ConfigureTabBarItemTitleColors(UITabBarItem *tabBarItem) {
 	#endif
 	
 	RootViewController *aboutRootViewController = [[RootViewController alloc] initWithRootViewController:aboutUsViewController];
+	[aboutUsViewController release];
 	
 		aboutUsViewController.delegate = self;
 		
@@ -158,6 +174,7 @@ static void ConfigureTabBarItemTitleColors(UITabBarItem *tabBarItem) {
 
 	
 	[localViewControllersArray addObject:aboutRootViewController];
+	[aboutRootViewController release];
 	
 	
 			tabBarController.viewControllers = localViewControllersArray;

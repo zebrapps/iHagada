@@ -16,6 +16,9 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		2CD8BADB2F63FDD60005271B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CD8BADA2F63FDD60005271B /* Assets.xcassets */; };
+		2CD8BADF2F644E4A0005271B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2CD8BADE2F644E4A0005271B /* GoogleService-Info.plist */; };
+		2CD8BAE22F644F250005271B /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2CD8BAE12F644F250005271B /* FirebaseAnalytics */; };
+		2CD8BAE42F6459D40005271B /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 2CD8BAE32F6459D40005271B /* FirebaseCrashlytics */; };
 		44239CA21503BB9B00E199C6 /* FourSonsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44239CA11503BB9B00E199C6 /* FourSonsViewController.m */; };
 		44239CA41503BBBF00E199C6 /* FourSonsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44239CA31503BBBF00E199C6 /* FourSonsViewController.xib */; };
 		44239CA81503BD3C00E199C6 /* FourSonsChooseThemeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 44239CA61503BD3C00E199C6 /* FourSonsChooseThemeViewController.m */; };
@@ -743,6 +746,7 @@
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2CD8BADA2F63FDD60005271B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		2CD8BADE2F644E4A0005271B /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* iHagada_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iHagada_Prefix.pch; sourceTree = "<group>"; };
 		44239CA01503BB9B00E199C6 /* FourSonsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FourSonsViewController.h; path = Shared/FourSonsViewController.h; sourceTree = "<group>"; };
 		44239CA11503BB9B00E199C6 /* FourSonsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FourSonsViewController.m; path = Shared/FourSonsViewController.m; sourceTree = "<group>"; };
@@ -1498,12 +1502,14 @@
 			files = (
 				442FF1B315125B7A00E6C55B /* libz.1.2.5.dylib in Frameworks */,
 				442FF1B115125B6500E6C55B /* CFNetwork.framework in Frameworks */,
+				2CD8BAE22F644F250005271B /* FirebaseAnalytics in Frameworks */,
 				442FF1AF15125B5B00E6C55B /* SystemConfiguration.framework in Frameworks */,
 				442FF1AD15125B5000E6C55B /* MobileCoreServices.framework in Frameworks */,
 				A43F7B8D2D8A3C1E00B10001 /* WebKit.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
+				2CD8BAE42F6459D40005271B /* FirebaseCrashlytics in Frameworks */,
 				88D14B10131D9B92001FD5A5 /* QuartzCore.framework in Frameworks */,
 				4452241B13367477004E31D1 /* MessageUI.framework in Frameworks */,
 				8866E115134B8FCC00F6B21C /* AudioToolbox.framework in Frameworks */,
@@ -1607,6 +1613,7 @@
 				442FF1AE15125B5B00E6C55B /* SystemConfiguration.framework */,
 				442FF1AC15125B5000E6C55B /* MobileCoreServices.framework */,
 				A43F7B8C2D8A3C1E00B10001 /* WebKit.framework */,
+				2CD8BADE2F644E4A0005271B /* GoogleService-Info.plist */,
 				8837695C134B8EEA006CC690 /* sound */,
 				2860E32A111B888700E27156 /* iPad */,
 				2860E324111B887F00E27156 /* iPhone */,
@@ -2567,6 +2574,7 @@
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+				2CD8BAE52F645A180005271B /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2604,6 +2612,9 @@
 				German,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* CustomTemplate */;
+			packageReferences = (
+				2CD8BAE02F644F250005271B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -2709,6 +2720,7 @@
 				8889EE8A134B846300EBAE2F /* 64_ipad.jpg in Resources */,
 				8889EE8B134B846300EBAE2F /* 65_ipad.jpg in Resources */,
 				8889EE8C134B846300EBAE2F /* 66_ipad.jpg in Resources */,
+				2CD8BADF2F644E4A0005271B /* GoogleService-Info.plist in Resources */,
 				048CB7DD18E6D53900D29243 /* chapters_w2_568.jpg in Resources */,
 				8889EE8D134B846300EBAE2F /* 67_ipad.jpg in Resources */,
 				8889EE8E134B846300EBAE2F /* 68_ipad.jpg in Resources */,
@@ -3306,6 +3318,33 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2CD8BAE52F645A180005271B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_PATH)",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}.debug.dylib",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -3364,12 +3403,14 @@
 				GCC_PREFIX_HEADER = iHagada_Prefix.pch;
 				IBC_WARNINGS = NO;
 				INFOPLIST_FILE = "iHagada-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = iHagada;
 				INFOPLIST_KEY_CFBundleIconName = AppIcon;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 5.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "i​Hagada​ID";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zebrapps.ihagada;
 				PRODUCT_NAME = iHagada;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -3397,12 +3438,14 @@
 				GCC_PREFIX_HEADER = iHagada_Prefix.pch;
 				IBC_WARNINGS = NO;
 				INFOPLIST_FILE = "iHagada-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = iHagada;
 				INFOPLIST_KEY_CFBundleIconName = AppIcon;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.books";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MARKETING_VERSION = 5.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "i​Hagada​ID";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_BUNDLE_IDENTIFIER = com.zebrapps.ihagada;
 				PRODUCT_NAME = iHagada;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 6.0;
@@ -3428,7 +3471,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -3473,7 +3516,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -3523,6 +3566,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2CD8BAE02F644F250005271B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = exactVersion;
+				version = 10.29.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2CD8BAE12F644F250005271B /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CD8BAE02F644F250005271B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		2CD8BAE32F6459D40005271B /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CD8BAE02F644F250005271B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
 }

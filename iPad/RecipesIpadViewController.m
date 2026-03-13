@@ -8,6 +8,7 @@
 
 #import "RecipesIpadViewController.h"
 #import "RecipeViewController.h"
+#import "Utilities.h"
 
 
 @implementation RecipesIpadViewController
@@ -93,6 +94,7 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+	IHAnalyticsLogScreen(@"ipad_recipes", @"iPad Recipes", @"RecipesIpadViewController");
 
 	[self.navigationController setNavigationBarHidden:YES animated:NO];
 
@@ -123,6 +125,7 @@
 }
 
 - (IBAction) selectRecipe:(id)sender {
+	IHAnalyticsLogAction(@"open_recipe", @"ipad_recipes", @"iPad Recipes", [imagesNames objectAtIndex:[(UIButton*)sender tag] - 1]);
 	RecipeViewController *recipeViewController = [[RecipeViewController alloc] initWithNibName:@"RecipeViewControllerIpad" bundle:nil];
 	[recipeViewController setImageName:[imagesNames objectAtIndex:[(UIButton*)sender tag] - 1]];
     [self.navigationController setNavigationBarHidden:YES animated:NO];	
@@ -133,6 +136,7 @@
 }
 
 - (IBAction) sirimWebSite {
+    IHAnalyticsLogAction(@"about_open_sirim", @"ipad_recipes", @"iPad Recipes", @"sirim");
     // Link disabled by request: keep action connected but intentionally no-op.
     return;
 }

@@ -10,6 +10,7 @@
 #import "ImageViewController.h"
 #import "AppDelegate_iPad.h"
 #import "AppDelegate_iPhone.h"
+#import "Utilities.h"
 
 @implementation MainTableViewController
 
@@ -137,6 +138,7 @@ AppDelegate_iPad *appDelegateIpad;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    IHAnalyticsLogScreen((isHebrew ? @"Hagada Screen" : @"Hagada English Screen"), (isHebrew ? @"Hagada Screen" : @"Hagada English Screen"), @"MainTableViewController");
 
     [self.navigationController setNavigationBarHidden:YES animated:NO];
     [self applyCurrentHeaderImage];
@@ -676,6 +678,7 @@ AppDelegate_iPad *appDelegateIpad;
 				selectedPage = 58;
 				break;				
 		}
+		IHAnalyticsLogAction(@"open_chapter", @"chapters_list", @"Hagada Chapters Hebrew", [NSString stringWithFormat:@"row_%ld_page_%ld", (long)indexPath.row, (long)selectedPage]);
 		[[NSUserDefaults standardUserDefaults] setInteger:selectedPage forKey:@"currentPageHeb"];	
 		[self.imageViewControllerHeb setHidesBottomBarWhenPushed:YES];
 		[self.navigationController setNavigationBarHidden:YES animated:NO];		
@@ -725,6 +728,7 @@ AppDelegate_iPad *appDelegateIpad;
 				selectedPage = 78;
 				break;
 		}
+		IHAnalyticsLogAction(@"open_chapter", @"chapters_list", @"Hagada Chapters English", [NSString stringWithFormat:@"row_%ld_page_%ld", (long)indexPath.row, (long)selectedPage]);
 		[[NSUserDefaults standardUserDefaults] setInteger:selectedPage forKey:@"currentPage"];		
 		[self.imageViewControllerEng setHidesBottomBarWhenPushed:YES];
 		[self.navigationController setNavigationBarHidden:YES animated:NO];		
@@ -734,6 +738,7 @@ AppDelegate_iPad *appDelegateIpad;
 
 - (void)changeLanguage:(id)sender
 {
+	IHAnalyticsLogAction(@"change_language", @"chapters_list", @"Hagada Chapters", ([sender isSelected] ? @"hebrew" : @"english"));
 	UIInterfaceOrientation orientation = /*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation];
 	
 	if ([sender isSelected]) {

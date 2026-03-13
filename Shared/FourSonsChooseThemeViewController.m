@@ -7,6 +7,7 @@
 //
 
 #import "FourSonsChooseThemeViewController.h"
+#import "Utilities.h"
 #import "FourSonsViewController.h"
 #import "OverlayChooseTemplate.h"
 
@@ -123,6 +124,7 @@ OverlayChooseTemplate *ovTemplateController;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    IHAnalyticsLogScreen(@"four_sons_themes", @"Four Sons Themes", @"FourSonsChooseThemeViewController");
 
     if (UIInterfaceOrientationIsPortrait(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
         [self.scrollViewPortrait setHidden:NO];
@@ -152,12 +154,14 @@ OverlayChooseTemplate *ovTemplateController;
 
 - (IBAction)ChooseTheme {
 //    [self dismissModalViewControllerAnimated:YES];
+    IHAnalyticsLogAction(@"select_theme", @"four_sons_themes", @"Four Sons Themes", [NSString stringWithFormat:@"theme_%ld", (long)pageControl.currentPage]);
     [self.delegate changeTheme:(int)pageControl.currentPage];
     [self.navigationController popToRootViewControllerAnimated:NO];     
     [self removeTemplateOverlayView];
 }
 
 - (IBAction)cancelChooseTheme {
+    IHAnalyticsLogAction(@"cancel_theme", @"four_sons_themes", @"Four Sons Themes", @"cancel");
     [self.navigationController popToRootViewControllerAnimated:NO];    
     [self removeTemplateOverlayView];
 }
@@ -174,6 +178,7 @@ OverlayChooseTemplate *ovTemplateController;
 -(IBAction)clickPageControl:(id)sender
 
 {
+    IHAnalyticsLogAction(@"theme_page_control", @"four_sons_themes", @"Four Sons Themes", [NSString stringWithFormat:@"theme_%ld", (long)pageControl.currentPage]);
     int page = (int)pageControl.currentPage;
     
     if (UIInterfaceOrientationIsPortrait(/*[[UIDevice currentDevice] orientation]*/[[UIApplication sharedApplication] statusBarOrientation])) {
@@ -212,6 +217,21 @@ OverlayChooseTemplate *ovTemplateController;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+}
+
+- (void)dealloc
+{
+    [ovTemplateController release];
+    [scrollViewPortrait release];
+    [scrollViewLandscape release];
+    [pageControl release];
+    [framePortrait release];
+    [frameLandscape release];
+    [cancelButtonPortrait release];
+    [confirmButtonPortrait release];
+    [cancelButtonLandscape release];
+    [confirmButtonLandscape release];
+    [super dealloc];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
