@@ -280,9 +280,14 @@ BOOL isHebrew;
     
 }
 -(void)alertOnMainThread:(NSArray *)arr {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:[arr objectAtIndex:0] message:[arr objectAtIndex:1] delegate:self cancelButtonTitle:[arr objectAtIndex:2] otherButtonTitles:nil];
-	[alert show];
-	[alert release];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:[arr objectAtIndex:0]
+                                                                   message:[arr objectAtIndex:1]
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *dismissAction = [UIAlertAction actionWithTitle:[arr objectAtIndex:2]
+                                                            style:UIAlertActionStyleCancel
+                                                          handler:nil];
+    [alert addAction:dismissAction];
+    [tabBarController presentViewController:alert animated:YES completion:nil];
 }
 #pragma -
 

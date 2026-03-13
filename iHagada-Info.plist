@@ -74,6 +74,8 @@
 	<string>Default.png</string>
 	<key>UIPrerenderedIcon</key>
 	<true/>
+	<key>UIRequiresFullScreen</key>
+	<true/>
 	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>UISupportedInterfaceOrientations</key>
