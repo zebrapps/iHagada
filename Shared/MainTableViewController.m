@@ -198,9 +198,14 @@ AppDelegate_iPad *appDelegateIpad;
 
 - (void)updateHeaderAndTableLayout {
     CGFloat bottomInset = 0.0f;
+    CGFloat tabBarHeight = 0.0f;
 
     if (@available(iOS 11.0, *)) {
         bottomInset = self.view.safeAreaInsets.bottom;
+    }
+
+    if (self.tabBarController != nil && !self.tabBarController.tabBar.hidden) {
+        tabBarHeight = self.tabBarController.tabBar.bounds.size.height;
     }
 
     CGRect contentFrame = [self contentLayoutFrame];
@@ -224,8 +229,11 @@ AppDelegate_iPad *appDelegateIpad;
     self.langButton.frame = CGRectMake(contentWidth - 37.0f, langButtonY, 30.0f, 30.0f);
 
     CGFloat tableY = CGRectGetMaxY(self.headerImageView.frame);
-    CGFloat tableHeight = viewBounds.size.height - tableY - bottomInset;
+    CGFloat visibleBottomInset = MAX(tabBarHeight, bottomInset);
+    CGFloat tableHeight = viewBounds.size.height - tableY - visibleBottomInset;
     self.tableView.frame = CGRectMake(contentX, tableY, contentWidth, MAX(tableHeight, 0.0f));
+    self.tableView.contentInset = UIEdgeInsetsZero;
+    self.tableView.scrollIndicatorInsets = self.tableView.contentInset;
 }
 
 - (void)applyCurrentHeaderImage {

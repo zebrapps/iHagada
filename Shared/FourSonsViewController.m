@@ -678,6 +678,20 @@ OverlayChooseImage *ovController;
     }
 
     NSArray *activityItems = [NSArray arrayWithObject:imageToShare];
+    if (self.presentedViewController != nil) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+            if (@available(iOS 8.0, *)) {
+                activityViewController.popoverPresentationController.sourceView = self.view;
+                activityViewController.popoverPresentationController.sourceRect = CGRectMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds), 1.0f, 1.0f);
+                activityViewController.popoverPresentationController.permittedArrowDirections = 0;
+            }
+            [self presentViewController:activityViewController animated:YES completion:nil];
+            [activityViewController release];
+        }];
+        return;
+    }
+
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
 
     if (@available(iOS 8.0, *)) {

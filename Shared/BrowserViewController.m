@@ -181,10 +181,9 @@ static NSArray *IHBrowserToolbarItems(id target) {
 	[self.delegate rotateOtherViewControllers:self toInterfaceOrientation:toInterfaceOrientation];
 	
 	#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 30200								
-	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-		//nil;
-        NSLog(@"Do Nothing");
-	else {	
+	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+		// Intentionally no-op on iPad.
+	} else {	
 		if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
 			cellWidth = 320;
 		} else if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
